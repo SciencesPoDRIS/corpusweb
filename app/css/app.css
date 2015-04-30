@@ -1,0 +1,218 @@
+/* app css stylesheet */
+/* General */
+
+body {
+    background-color: #fafafa;
+    color: #343333;
+    font-family: Arial Regular, sans-serif;
+    font-size: 1.4em;
+    margin: 0 auto;
+    overflow-x: auto;
+    overflow-y: scroll;
+    padding: 0;
+    width: 100%;
+}
+
+h1 {
+    font-size: 1.4em;
+    line-height: 20px;
+    margin: 0 0 8px;
+    padding: 0 5px 2px;
+}
+
+a:link,
+a:visited {
+    color: #343333;
+    text-decoration: underline;
+}
+
+.menu {
+    list-style: none;
+    margin-bottom: 2em;
+    padding: 0 0 0.5em;
+}
+
+.menu > li {
+    display: inline;
+}
+
+.menu > li:nth-child(1):before {
+    content: "";
+    padding: 0;
+}
+/* Header */
+
+#header-inmedia_1 {
+    background-color: #fafafa;
+    border-bottom: 3px solid #e6142d;
+    height: 68px;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+#logo-tools {
+    height: 100%;
+}
+
+.logo_scpo {
+    margin-left: 6px;
+    margin-top: 6px;
+    width: 11%;
+}
+
+.logo_scpo img {
+    height: 29px;
+    margin-bottom: 20px;
+    margin-left: 18px;
+    margin-top: 14px;
+}
+
+ul#menu_appli {
+    float: left;
+    position: relative;
+    top: 11px;
+    width: 365px;
+}
+
+ul#menu_appli li a {
+    color: #e6142d;
+}
+
+#cata_ent {
+    background: #f6f4f3;
+    border-radius: 5px;
+    font-size: 12px;
+    height: 45px;
+    left: 242px;
+    margin-top: 4px;
+    padding: 3px;
+    position: relative;
+    top: -62px;
+    width: 585px;
+}
+
+.catalog_title {
+    background: #e6142d;
+    border-radius: 3px;
+    color: #fafafa;
+    float: left;
+    height: 39px;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 9px;
+    padding-top: 9px;
+    position: relative;
+    top: -9px;
+    width: 101px;
+}
+
+.catalog_title a,
+.catalog_title a:link,
+.catalog_title a:visited {
+    color: #fafafa;
+    text-decoration: none;
+}
+
+#social {
+    float: left;
+    position: relative;
+    top: 3px;
+}
+
+.desc-appli {
+    background-color: #fafafa;
+    height: 1px;
+    position: fixed;
+    right: 0;
+    top: -5px;
+    width: 250px;
+}
+
+#iframe_horaire {
+    border: none;
+    height: 68px;
+}
+
+.horaire_bloc {
+    background: #f6f4f3 url('http://sciencespo.fr/bibliotheque/sites/sciencespo.fr.bibliotheque/files/icones/schedule.png') no-repeat right top;
+    background-size: 25px 25px;
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    font-family: Helvetica, Arial, sans-shérif;
+    font-size: 0.8em;
+    padding: 2px;
+    padding-top: 5px;
+    padding-left: 3px;
+    width: 228px;
+}
+
+.horaire_bloc h2 {
+    left: -100000000000px;
+    position: absolute;
+}
+
+.horaire_bloc a {
+    color: #e6142d;
+    font-style: italic;
+    font-weight: bold;
+}
+/* Footer */
+
+.footer {
+    border-top: 3px solid #e6142d;
+}
+
+.footer-content {
+    background-color: #f6f4f3;
+}
+/* Main Content */
+
+.main-content {
+    margin: 75px 10% 50px 10%;
+}
+
+.corpus-snippet {
+    margin: 25px 0;
+}
+
+.nav-tabs > li > a {
+    text-decoration: none;
+}
+
+.webentities .container {
+    padding: 15px;
+}
+
+img.fit {
+    height: 100%;
+    width: 100%;
+}
+/* Tab Sites list */
+
+.pagination>li>a,
+.pagination>li>a:focus,
+.pagination>li>a:hover,
+.pagination>li>span,
+.pagination>li>span:focus,
+.pagination>li>span:hover {
+    color: #e6142d;
+}
+
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: #e6142d;
+    border-color: #e6142d;
+}
+/* Tab Cartography */
+
+#carto {
+    height: 500px;
+    width: 100%;
+}
