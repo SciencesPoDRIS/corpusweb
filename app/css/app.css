@@ -192,6 +192,15 @@ img.fit {
 }
 /* Tab Sites list */
 
+.webentities input.search {
+    margin: 10px 0;
+    width: 100%;
+}
+
+.webentities .media {
+    padding: 10px 0;
+}
+
 .pagination>li>a,
 .pagination>li>a:focus,
 .pagination>li>a:hover,
