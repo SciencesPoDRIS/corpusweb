@@ -2,7 +2,7 @@
 /* General */
 
 body {
-    background-color: #fafafa;
+    background-color: #ffffff;
     color: #343333;
     font-family: Arial Regular, sans-serif;
     font-size: 1.4em;
@@ -43,7 +43,7 @@ a:visited {
 /* Header */
 
 #header-inmedia_1 {
-    background-color: #fafafa;
+    background-color: #ffffff;
     border-bottom: 3px solid #e6142d;
     height: 68px;
     left: 0;
