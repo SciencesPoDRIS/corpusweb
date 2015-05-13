@@ -1,8 +1,7 @@
 (function() {
     'use strict';
 
-    var app = angular.module('webcorpus', [
-        // 'elasticjs.service',
+    var app = angular.module('corpusweb', [
         'ui.bootstrap',
         'ngRoute',
         'elasticsearch'
@@ -55,7 +54,13 @@
     // Inputs: $scope and the 'es' service
 
     app.controller('QueryController',
-        function($scope, es) {
+        function($scope, $http, es) {
+            // Load facets
+            $scope.facets = [];
+            $http.get('../data/corpora.json').success(function(data) {
+                $scope.facets = data.corpora[0].facets;
+            });
+
             $scope.search = function() {
                     if (!$scope.queryTerm == '') {
                         es.search({
@@ -68,9 +73,18 @@
                                         "fields": ["name", "start pages"]
                                     }
                                 },
+                                /*
+                                "facets": {
+                                    "tags": {
+                                        "terms": {
+                                            "field": "indegree"
+                                        }
+                                    }
+                                }
+                                */
                             }
                         }).then(function(response) {
-                            $scope.hits = response.hits.hits;
+                            $scope.webentities = response.hits.hits;
                         });
                     } else {
                         es.search({
@@ -80,13 +94,22 @@
                                 "query": {
                                     "match_all": {}
                                 },
+                                /*
+                                "facets": {
+                                    "tags": {
+                                        "terms": {
+                                            "field": "indegree"
+                                        }
+                                    }
+                                }
+                                */
                             }
                         }).then(function(response) {
-                            $scope.hits = response.hits.hits;
+                            $scope.webentities = response.hits.hits;
                         });
                     }
                 }
-                // Load all results
+                // Initialize search as full search
             $scope.search();
         }
     );
