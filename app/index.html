@@ -33,7 +33,7 @@
                     <li class="nav-item-3 ml"><a id="spire" class="ext" title="Spire - New window" href="http://spire.sciencespo.fr/web/?lang=en" target="_blank">Spire</a></li>
                 </ul>
                 <div id="social">
-                    <a title="Ask a librarian" href="http://www.sciencespo.fr/bibliotheque/fr/services/renseignements"><img title="Ask a librarian" src="http://www.sciencespo.fr/bibliotheque/sites/sciencespo.fr.bibliotheque/files/images/ask-librarian.png" alt="Logo Ask a librarian" width="30" height="30"></a>&nbsp;
+                    <a title="Ask a librarian" href="http://www.sciencespo.fr/bibliotheque/en/services/ask-librarian" target="_blank"><img title="Ask a librarian" src="http://www.sciencespo.fr/bibliotheque/sites/sciencespo.fr.bibliotheque/files/images/ask-librarian.png" alt="Logo Ask a librarian" width="30" height="30"></a>&nbsp;
                     <a id="twitter" title="Join us on twitter - New window" href="https://twitter.com/ScPoBibli" target="_blank"><img title="Join us on twitter" src="http://www.sciencespo.fr/bibliotheque/sites/sciencespo.fr.bibliotheque/files/images/twitter_logo_blue.png" alt="Logo Twitter"></a>&nbsp;
                     <a id="facebook" title="Join us on facebook - New window" href="http://www.facebook.com/sciencespo.library" target="_blank"><img title="Join us on facebook" src="http://www.sciencespo.fr/bibliotheque/sites/sciencespo.fr.bibliotheque/files/images/f_logo.png" alt="Logo Facebook"></a>
                 </div>
@@ -45,14 +45,8 @@
     </div>
     <!-- Main Content -->
     <div class="main-content container-fluid">
-        <div ng-include="'partials/corpus-snippet.html'"></div>
-        <div ng-controller="TabsCtrl">
-            <tabset>
-                <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled">
-                    <div ng-include="tab.content"></div>
-                </tab>
-            </tabset>
-        </div>
+        <div class="row corpus-snippet" ng-include="'partials/corpus-snippet.html'"></div>
+        <div class="row" ng-view></div>
     </div>
     <!-- Footer -->
     <div id="footer" class="footer container-fluid">

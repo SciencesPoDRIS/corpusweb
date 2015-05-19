@@ -1,43 +1,32 @@
 <div ng-controller="QueryController" class="webentities">
-    <div class="container-fluid">
+    <div class="col-md-6">
         <div class="row">
-            <div class="col-md-2">
-                <div ng-repeat="facet in facets">
-                    <!-- <a ng-click="filter('Tags', facet.term)">
-                        <i class="icon-remove-sign" ng-show="isActive('Tags', facet.term)"></i>
-                    </a> -->
-                    {{facet.name_en}}
-                    <div ng-repeat="item in facet.values_en">
-                        <input type="checkbox" name="facet.name_en" value="item" />{{item}}
-                    </div>
+            <input class="input-large search" ng-model="queryTerm" type="text" placeholder="What are you looking for ?" ng-change="search()" />
+        </div>
+        <div ng-repeat="facet in facets">
+            <div class="row">
+                {{facet.name_en}}
+                <div ng-repeat="item in facet.values_en">
+                    <input type="checkbox" name="facet.name_en" value="item" />{{item}}
                 </div>
-            </div>
-            <div class="col-md-10">
-                <div class="row">
-                    <span class="col-md-4">
-                <input class="input-large search" ng-model="queryTerm" type="text" placeholder="What are you looking for ?" ng-change="search()"/>
-            </span>
-                </div>
-                <div class="row-fluid">
-                    <div class="span4">
-                        <div ng-repeat="webentity in webentities">
-                            <div class="media row">
-                                <div class="media-left col-md-3">
-                                    <!-- <img class="fit" src="http://www.thumboweb.com/320.php?url=http://www." + {{webentity[1]}}></img> -->
-                                    <img class="fit" src="http://www.thumboweb.com/320.php?url=http://www.sciencespo.fr"></img>
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading">{{webentity['_source']['name']}}</h4>
-                                    <div><a href="{{webentity['_source']['start pages']}}" target="_blank">{{webentity['_source']['start pages']}}</a></div>
-                                    <div>by </div>
-                                    <div>keywords : </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-links="true" num-pages="numPages" ng-change="pageChanged()"></pagination>
             </div>
         </div>
+        <div class="row">
+            <div ng-repeat="webentity in webentities">
+                <div class="media col-md-4">
+                    <div>
+                        <!-- <img class="fit" src="http://www.thumboweb.com/320.php?url=http://www." + {{webentity[1]}}></img> -->
+                        <img class="fit" src="http://www.thumboweb.com/320.php?url=http://www.sciencespo.fr"></img>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">{{webentity['_source']['name']}}</h4>
+                        <div><a href="{{webentity['_source']['start pages']}}" target="_blank">{{webentity['_source']['start pages']}}</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div id="carto"></div>
     </div>
 </div>

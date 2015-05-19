@@ -1,8 +1,13 @@
 <div ng-controller="CorpusSnippetCtrl">
-    <h2>{{corpus.title}}</h2>
-    <div class="corpus-snippet">
+    <div class="col-md-3">
+        <h2>{{corpus.title}}</h2>
+    </div>
+    <div class="col-md-6 corpus-resume">
         <div><i>Last update the {{corpus.last_modification_date}}</i></div>
         <div><i>Authors : {{corpus.authors}}</i></div>
         <div><i>{{corpus.dimension}} web sites</i></div>
+    </div>
+    <div class="col-md-3 corpus-link">
+    	<a href="#/description">Corpus</a>
     </div>
 </div>

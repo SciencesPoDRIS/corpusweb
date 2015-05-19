@@ -175,7 +175,13 @@ ul#menu_appli li a {
 }
 
 .corpus-snippet {
-    margin: 25px 0;
+    border-bottom: 2px solid #f6f4f3;
+    margin-bottom: 50px;
+}
+
+.corpus-resume,
+.corpus-link {
+    margin: 20px 0;
 }
 
 .nav-tabs > li > a {
@@ -199,6 +205,10 @@ img.fit {
 
 .webentities .media {
     padding: 10px 0;
+}
+
+.webentities .media img {
+    padding: 3px;
 }
 
 .pagination>li>a,
