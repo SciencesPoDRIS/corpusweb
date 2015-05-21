@@ -4,14 +4,15 @@
     var app = angular.module('corpusweb', [
         'ui.bootstrap',
         'ngRoute',
-        'elasticsearch'
+        'elasticsearch',
+        'ngMaterial'
     ]);
 
     app.config(['$routeProvider',
         function($routeProvider) {
             $routeProvider.
             when('/', {
-                templateUrl: 'partials/webentities-list.html',
+                templateUrl: 'partials/search-list.html',
                 controller: 'QueryController'
             }).
             when('/description', {
@@ -56,12 +57,20 @@
 
     app.controller('QueryController',
         function($scope, $http, es) {
+            // Initialise search input
+            $scope.selectedItem = 0;
+            $scope.searchText = '';
+
+            // Initialise slider default value
+            $scope.slider = 1;
+
             // Load facets
             $scope.facets = [];
             $http.get('../data/corpora.json').success(function(data) {
                 $scope.facets = data.corpora[0].facets;
             });
 
+            // Launch search
             $scope.search = function() {
                     if (!$scope.queryTerm == '') {
                         es.search({
@@ -74,18 +83,9 @@
                                         "fields": ["name", "start pages"]
                                     }
                                 },
-                                /*
-                                "facets": {
-                                    "tags": {
-                                        "terms": {
-                                            "field": "indegree"
-                                        }
-                                    }
-                                }
-                                */
                             }
                         }).then(function(response) {
-                            $scope.webentities = response.hits.hits;
+                            $scope.tiles = response.hits.hits;
                         });
                     } else {
                         es.search({
@@ -95,30 +95,29 @@
                                 "query": {
                                     "match_all": {}
                                 },
-                                /*
-                                "facets": {
-                                    "tags": {
-                                        "terms": {
-                                            "field": "indegree"
-                                        }
-                                    }
-                                }
-                                */
                             }
                         }).then(function(response) {
-                            $scope.webentities = response.hits.hits;
+                            $scope.tiles = response.hits.hits;
                         });
                     }
                 }
                 // Initialize search as full search
             $scope.search();
 
+            $scope.formatFacet = function(values) {
+                return values.sort().map(function(value) {
+                    return {
+                        value: value.toLowerCase(),
+                        display: value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
+                    }
+                });
+            }
+
             sigma.parsers.gexf(
-                '../../data/anne-test.gexf', {
+                '../../data/arctic.gexf', {
                     container: 'carto'
                 },
                 function(s) {
-                    console.log("lailou");
                     s.refresh();
                 }
             );
@@ -152,7 +151,6 @@
             $scope.resultsArr = [];
 
             $scope.search = function() {
-                console.log('search');
                 $scope.resultsArr = [];
                 if (!$scope.queryTerm == '') {
                     results = statusRequest
@@ -160,7 +158,6 @@
                         // .fields(['name', 'prefixes', 'start pages'])
                         .doSearch();
                     $scope.resultsArr.push(results);
-                    console.log($scope.resultsArr);
                 } else {
                     results = {};
                     $scope.resultsArr = [];
