@@ -11,7 +11,7 @@
         function($routeProvider) {
             $routeProvider.
             when('/', {
-                templateUrl: 'partials/search-list.html',
+                templateUrl: 'partials/search-entities.html',
                 controller: 'QueryController'
             }).
             when('/description', {
@@ -40,8 +40,8 @@
         }
     ]);
 
-    app.controller('QueryController', ['$scope', '$http',
-        function($scope, $http) {
+    app.controller('QueryController', ['$scope', '$http', '$modal',
+        function($scope, $http, $modal) {
             $scope.queryTerm = '';
             $scope.totalItems = 0;
             $scope.currentPage = 1;
@@ -52,7 +52,7 @@
 
             // Load the graph
             sigma.parsers.gexf(
-                '../../data/COP21.gexf', {
+                '../data/COP21.gexf', {
                     container: 'carto',
                     settings: {
                         defaultEdgeColor: '#d3d3d3',
@@ -65,6 +65,8 @@
                     });
                     s.refresh();
                     $scope.sig = s;
+                    // Initiate the search results
+                    $scope.search();
                 }
             );
 
@@ -106,8 +108,29 @@
                 });
             }
 
-            // Initiate the search results
-            $scope.search();
+            $scope.viewEntity = function(item) {
+                var modalInstance = $modal.open({
+                    animation: true,
+                    templateUrl: 'entity',
+                    controller: 'ModalInstanceCtrl',
+                    size: 'lg',
+                    resolve: {
+                        item: function() {
+                            return item;
+                        }
+                    }
+                });
+            }
         }
     ]);
+
+    app.controller('ModalInstanceCtrl',
+        function($scope, $modalInstance, item) {
+            $scope.item = item;
+
+            $scope.close = function() {
+                $modalInstance.close();
+            };
+        }
+    );
 })();

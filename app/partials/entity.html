@@ -1,0 +1,16 @@
+<script type="text/ng-template" id="entity" class="entity">
+    <div class="modal-header" id="{{item.ID}}">
+        <h3 class="modal-title">{{item.NAME}}</h3>
+    </div>
+    <div class="modal-body">
+        <div>
+            <img src="https://api.pagelr.com/capture?uri={{item.url}}&width=400&height=300"></img>
+        </div>
+        <div>
+            <a title="{{item.NAME}} | New window" href="{{item.url}}" target="_blank">{{item.url}}</a>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="close()">Close</button>
+    </div>
+</script>
