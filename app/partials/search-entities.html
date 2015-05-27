@@ -1,5 +1,6 @@
 <div ng-controller="QueryController" class="search">
     <div class="col-md-6">
+        <div ng-include="'partials/entity.html'"></div>
         <div class="row searchfield">
             <md-input-container md-no-float>
                 <span class="glyphicon glyphicon-search icon-flip-horizontal" aria-hidden="true"></span>
@@ -8,17 +9,15 @@
         </div>
         <div class="row" flex="" class="gridListdemoDynamicTiles">
             <md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="2" md-row-height-gt-md="4:3" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px">
-                <md-grid-tile ng-repeat="result in results" md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-class="gray">
+                <md-grid-tile id="{{result.ID}}" ng-repeat="result in results" md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-class="gray" ng-click="viewEntity(result)">
                     <img class="fit" src="https://api.pagelr.com/capture?uri={{result.url}}&width=400&height=300"></img>
                     <md-grid-tile-footer>
                         <h3>{{result.NAME}}</h3>
                     </md-grid-tile-footer>
                 </md-grid-tile>
-
             </md-grid-list>
             <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="search()"></pagination>
         </div>
-        
     </div>
     <div class="col-md-6">
         <div id="carto"></div>
