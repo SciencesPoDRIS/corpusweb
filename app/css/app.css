@@ -47,6 +47,10 @@ a:visited {
     -webkit-transform: scaleX(-1);
     -ms-transform: scaleX(-1);
 }
+
+.red {
+    color: #e6142d;
+}
 /* Header */
 
 #header-inmedia_1 {
@@ -369,4 +373,10 @@ md-grid-list md-grid-tile md-grid-tile-header {
 #carto {
     height: 500px;
     width: 100%;
+}
+
+/* Modal */
+
+.modal-image {
+    margin-bottom: 15px;
 }
