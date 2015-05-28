@@ -17,8 +17,8 @@
             when('/description', {
                 templateUrl: 'partials/description.html',
                 controller: 'CorpusCtrl'
-            }).
-            otherwise({
+            })
+            .otherwise({
                 redirectTo: '/'
             });
         }
@@ -56,7 +56,8 @@
                     container: 'carto',
                     settings: {
                         defaultEdgeColor: '#d3d3d3',
-                        edgeColor: '#d3d3d3'
+                        edgeColor: '#d3d3d3',
+                        labelThreshold: 100
                     }
                 },
                 function(s) {
