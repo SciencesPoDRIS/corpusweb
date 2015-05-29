@@ -1,4 +1,4 @@
-<div ng-controller="QueryController" class="search">
+<div class="search">
     <div class="row">
         <div class="col-md-12 searchfield">
             <md-input-container md-no-float class="col-md-offset-3 col-md-6">
@@ -11,11 +11,11 @@
         <div class="col-md-6">
             <div ng-include="'partials/entity.html'"></div>
             <div class="row grid-list" flex="">
-                <md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="2" md-row-height-gt-md="4:3" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="10px">
+                <md-grid-list md-cols-sm="1" md-cols-md="3" md-cols-gt-md="3" md-row-height-gt-md="4:3" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="10px">
                     <md-grid-tile id="{{result.ID}}" ng-repeat="result in results" md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-class="gray" ng-click="viewEntity(result)">
-                        <img class="fit" src="https://api.pagelr.com/capture?uri={{result.url}}&width=400&height=300"></img>
+                        <img class="fit grayscale" src="https://api.pagelr.com/capture?uri={{result.URL}}&width=400&height=300"></img>
                         <md-grid-tile-footer class="tile-footer">
-                            <h3>{{result.NAME}}</h3>
+                            <h3>{{result.NOM}}</h3>
                         </md-grid-tile-footer>
                     </md-grid-tile>
                 </md-grid-list>
@@ -24,6 +24,26 @@
         </div>
         <div class="col-md-6">
             <div id="carto"></div>
+            <div class="row">
+                <div id="key" class="col-md-6">
+                    <div class="key-item active"><span class="key-color" style="background-color:rgb(18,68,220);">&nbsp;&nbsp;&nbsp;</span> blogger</div>
+                    <div class="key-item active"><span class="key-color" style="background-color:rgb(194,18,220);">&nbsp;&nbsp;&nbsp;</span> institution</div>
+                    <div class="key-item active"><span class="key-color" style="background-color:rgb(119,220,18);">&nbsp;&nbsp;&nbsp;</span> association/non-profit organization</div>
+                    <div class="key-item active"><span class="key-color" style="background-color:rgb(255,112,151);">&nbsp;&nbsp;&nbsp;</span> governmental project</div>
+                    <div class="key-item active"><span class="key-color" style="background-color:rgb(18,220,68);">&nbsp;&nbsp;&nbsp;</span> initiative</div>
+                    <div class="key-item active"><span class="key-color" style="background-color:rgb(192,112,255);">&nbsp;&nbsp;&nbsp;</span> think tank</div>
+                    <div class="key-item active"><span class="key-color" style="background-color:rgb(220,169,18);">&nbsp;&nbsp;&nbsp;</span> academic</div>
+                </div>
+                <div id="key2" class="col-md-6">
+                    <div class="key-item active"><span class="key-color" style="background-color:rgb(194,41,0);">&nbsp;&nbsp;&nbsp;</span> NGO</div>
+                    <div class="key-item active"><span class="key-color" style="background-color:rgb(18,144,220);">&nbsp;&nbsp;&nbsp;</span> activist</div>
+                    <div class="key-item active"><span class="key-color" style="background-color:rgb(194,220,18);">&nbsp;&nbsp;&nbsp;</span> research institution</div>
+                    <div class="key-item active"><span class="key-color" style="background-color:rgb(173,148,255);">&nbsp;&nbsp;&nbsp;</span> company</div>
+                    <div class="key-item active"><span class="key-color" style="background-color:rgb(185,185,185);">&nbsp;&nbsp;&nbsp;</span> research project</div>
+                    <div class="key-item active"><span class="key-color" style="background-color:rgb(193,193,193);">&nbsp;&nbsp;&nbsp;</span> other</div>
+                    <div class="key-item active"><span class="key-color" style="background-color:rgb(189,189,189);">&nbsp;&nbsp;&nbsp;</span> politician</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
