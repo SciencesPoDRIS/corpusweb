@@ -53,18 +53,6 @@ a:visited {
     color: #e6142d;
 }
 
-img.grayscale {
-    /* for Webkit browsere, Chrome 19+, Safari 6+ ... */
-    
-    -webkit-filter: grayscale(1);
-    /* this is for Firefox 3.5+, Firefox mobile */
-    
-    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'gs\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#gs");
-    /* for IE6+ */
-    
-    filter: gray;
-}
-
 .subtitle {
     margin: 0;
 }
@@ -344,6 +332,25 @@ md-grid-tile {
 md-grid-tile img,
 .tile-footer {
     border-radius: 0 0 1.1em 1.1em;
+}
+
+md-grid-tile img {
+    /* for Webkit browsere, Chrome 19+, Safari 6+ ... */
+    
+    -webkit-filter: grayscale(1);
+    /* this is for Firefox 3.5+, Firefox mobile */
+    
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'gs\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#gs");
+    /* for IE6+ */
+    
+    filter: gray;
+}
+
+md-grid-tile img:hover {
+    /* for Webkit browsere, Chrome 19+, Safari 6+ ... */
+    -webkit-filter: initial;
+    /* this is for IE6, Firefox 3.5+, Firefox mobile */
+    filter: initial;
 }
 
 .tile-footer h3 {

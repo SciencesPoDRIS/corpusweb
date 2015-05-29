@@ -13,7 +13,7 @@
             <div class="row grid-list" flex="">
                 <md-grid-list md-cols-sm="1" md-cols-md="3" md-cols-gt-md="3" md-row-height-gt-md="4:3" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="10px">
                     <md-grid-tile id="{{result.ID}}" ng-repeat="result in results" md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-class="gray" ng-click="viewEntity(result)">
-                        <img class="fit grayscale" src="https://api.pagelr.com/capture?uri={{result.URL}}&width=400&height=300"></img>
+                        <img class="fit" src="https://api.pagelr.com/capture?uri={{result.URL}}&width=400&height=300"></img>
                         <md-grid-tile-footer class="tile-footer">
                             <h3>{{result.NOM}}</h3>
                         </md-grid-tile-footer>
