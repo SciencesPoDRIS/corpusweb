@@ -19,7 +19,7 @@
                 controller: 'CorpusCtrl'
             }).
             otherwise({
-                 redirectTo: '/'
+                redirectTo: '/'
             });
         }
     ]);
@@ -50,62 +50,108 @@
             var begin = 0;
             var end = 0;
 
-            // Load the graph
-            sigma.parsers.gexf(
-                '../data/COP21.gexf', {
-                    container: 'carto',
-                    settings: {
-                        defaultEdgeColor: '#d3d3d3',
-                        edgeColor: '#d3d3d3',
-                        labelThreshold: 100
+            $scope.init = function() {
+                // Load the graph
+                sigma.parsers.gexf(
+                    '../data/COP21.gexf', {
+                        container: 'graph',
+                        settings: {
+                            defaultEdgeColor: '#d3d3d3',
+                            edgeColor: '#d3d3d3',
+                            labelThreshold: 100
+                        }
+                    },
+                    function(s) {
+                        $scope.graph = s;
+                        $scope.graph.refresh();
+                        // Load all results
+                        $http.get('../data/COP21.csv').success(function(data) {
+                            $scope.allResults = $.csv.toObjects(data).slice(1);
+                            $scope.filter();
+                        });
                     }
-                },
-                function(s) {
-                    s.graph.nodes().forEach(function(n) {
-                        // n.color = '#707070';
-                    });
-                    s.refresh();
-                    $scope.sig = s;
-                    // Initiate the search results
-                    $scope.search();
-                }
-            );
+                );
+            }
 
-            $scope.search = function() {
+            /* Filter the results on the query term */
+            $scope.filter = function() {
+                ids = new Array();
+                $scope.currentPage = 1;
+                $scope.filteredResults = $scope.allResults.filter(function(item) {
+                    if ((item.NOM.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0) || (item["type d'acteur"].toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0)) {
+                        ids.push(item.ID);
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+                $scope.totalItems = $scope.filteredResults.length;
+                $scope.display();
+            }
+
+            /* Filter the results to display the current page according to pagination */
+            $scope.display = function() {
                 begin = ($scope.currentPage - 1) * 10;
                 end = begin + $scope.numPerPage;
-                $http.get('../data/COP21.csv').success(function(data) {
-                    $scope.allResults = $.csv.toObjects(data).slice(1);
-                    $scope.results = $scope.allResults.filter(function(item) {
-                        if((item.NOM.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0) || (item["type d'acteur"].toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0)) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    });
-                    $scope.totalItems = $scope.results.length;
-                    $scope.results = $scope.results.slice(begin, end);
-                    // Aggregate all the ids of the selected nodes
-                    ids = $scope.results.map(function(item) {
-                        return item.ID;
-                    });
-                    if (!$scope.queryTerm) {
-                        // Reset all nodes' color to the default one
-                        $scope.sig.graph.nodes().forEach(function(n) {
-                            // n.color = '#707070';
-                        });
-                    } else {
-                        // Reset all nodes' color to the light grey
-                        $scope.sig.graph.nodes().forEach(function(node) {
-                            node.color = '#d3d3d3';
-                        });
-                        // Color selected nodes into red
-                        $scope.sig.graph.nodes().forEach(function(node) {
-                            if(ids.indexOf(node.id) != -1) node.color = '#e6142d';
-                        });
-                    }
-                    $scope.sig.refresh();
+                $scope.displayedResults = $scope.filteredResults.slice(begin, end);
+                // Reset all nodes' color to the light grey
+                $scope.graph.graph.nodes().forEach(function(node) {
+                    node.color = '#d3d3d3';
                 });
+                // Color selected nodes into red
+                $scope.graph.graph.nodes().forEach(function(node) {
+                    if (ids.indexOf(node.id) != -1) {
+                        // #TODO : Put it into a config file
+                        switch(node.attributes["type d'acteur"]) {
+                            case 'blogueur' :
+                                node.color = '#1244dc';
+                                break;
+                            case 'think tank' :
+                                node.color = '#c070ff';
+                                break;
+                            case 'institution' :
+                                node.color = '#c212dc';
+                                break;
+                            case 'initiative' :
+                                node.color = '#12dc44';
+                                break;
+                            case 'ONG' :
+                                node.color = '#c22900';
+                                break;
+                            case 'entreprise' :
+                                node.color = '#ad94ff';
+                                break;
+                            case 'autre' :
+                                node.color = '#c1c1c1';
+                                break;
+                            case 'expert/chercheur' :
+                                node.color = '#dc4512';
+                                break;
+                            case 'politique' :
+                                node.color = '#bdbdbd';
+                                break;
+                            case 'militant' :
+                                node.color = '#1290dc';
+                                break;
+                            case 'projet gouvernemental' :
+                                node.color = '#ff7097';
+                                break;
+                            case 'projet de recherche' :
+                                node.color  = '#b9b9b9';
+                                break;
+                            case 'association/organisation Ã  but non lucratif' :
+                                node.color = '#77dc12';
+                                break;
+                            case 'institut' :
+                                node.color = '#c2dc12';
+                                break;
+                            default :
+                                console.log('Error : no color setted for actor\'s type : ' + node.attributes["type d'acteur"]);
+                                break;
+                        }
+                    }
+                });
+                $scope.graph.refresh();
             }
 
             $scope.viewEntity = function(item) {
@@ -121,6 +167,8 @@
                     }
                 });
             }
+
+            $scope.init();
         }
     ]);
 
@@ -133,4 +181,12 @@
             };
         }
     );
+
+    app.run(function($rootScope, $location) {
+        $rootScope.$on('$routeChangeSuccess', function() {
+            // ga('send', 'pageview', $location.path());
+            ga('create', 'UA-63565327-1', 'auto');
+            ga('send', 'pageview');
+        });
+    });
 })();
