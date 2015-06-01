@@ -66,6 +66,19 @@ a:visited {
     border-top: 1px solid #343333;
     font-size: small;
 }
+
+::-webkit-input-placeholder {
+   color: #6c6c6c;
+}
+:-moz-placeholder { /* Firefox 18- */
+   color: #6c6c6c;  
+}
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #6c6c6c;  
+}
+:-ms-input-placeholder {  
+   color: #6c6c6c;  
+}
 /* Header */
 
 #header-inmedia_1 {
@@ -274,15 +287,20 @@ img.fit {
 }
 
 .search .glyphicon-search {
-    color: #e0e0e0;
+    color: #343333;
 }
 
 .search md-input-container {
     display: inline;
 }
 
+.search md-input-container.md-default-theme:not(.md-input-invalid) .md-input {
+    border-bottom: 1px solid #343333;
+}
+
 .search md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused .md-input {
-    border-color: #e6142d;
+    border-bottom: 1px solid #e6142d;
+    padding-bottom: 1px;
 }
 
 .search input[type=checkbox] {
@@ -334,7 +352,7 @@ md-grid-tile img,
     border-radius: 0 0 1.1em 1.1em;
 }
 
-md-grid-tile img {
+.grayscale {
     /* for Webkit browsere, Chrome 19+, Safari 6+ ... */
     
     -webkit-filter: grayscale(1);
@@ -346,10 +364,12 @@ md-grid-tile img {
     filter: gray;
 }
 
-md-grid-tile img:hover {
+.grayscale:hover {
     /* for Webkit browsere, Chrome 19+, Safari 6+ ... */
+    
     -webkit-filter: initial;
     /* this is for IE6, Firefox 3.5+, Firefox mobile */
+    
     filter: initial;
 }
 
@@ -359,7 +379,7 @@ md-grid-tile img:hover {
 }
 /* Tab Cartography */
 
-#carto {
+#graph {
     background-color: #fff;
     border: 1px solid #b6b6b6;
     height: 500px;
