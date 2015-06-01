@@ -1,9 +1,9 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="webcorpus" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="webcorpus" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="webcorpus" class="no-js lt-ie9"> <![endif]-->
+<!--[if lt IE 7]>      <html lang="en" ng-app="corpusweb" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="corpusweb" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="corpusweb" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html lang="en" ng-app="corpusweb" class="no-js">
+<html lang="en" class="no-js">
 <!--<![endif]-->
 
 <head>
@@ -18,7 +18,7 @@
     <link rel="shortcut icon" href="http://www.sciencespo.fr/bibliotheque/sites/kit2site02.bibliotheque/themes/montheme/favicon.ico" type="image/x-icon">
 </head>
 
-<body>
+<body ng-app="corpusweb">
     <!-- Header -->
     <div ng-include="'partials/header.html'"></div>
     <!-- Main Content -->
@@ -30,7 +30,7 @@
     </div>
     <!-- Footer -->
     <div class="row" ng-include="'partials/footer.html'"></div>
-    <!-- project dependency libs -->
+    <!-- Project dependency libs -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="https://code.angularjs.org/1.3.15/angular.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
@@ -41,8 +41,23 @@
     <script type="text/javascript" src="js/sigma.min.js"></script>
     <script type="text/javascript" src="js/sigma.parsers.gexf.min.js"></script>
     <script type="text/javascript" src="js/jquery.csv-0.71.min.js"></script>
-    <!-- project specific files -->
+    <script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script>
+    <!-- Project specific lib -->
     <script src="js/app.js"></script>
+    <!-- Add Google Analytics -->
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    </script>
 </body>
 
 </html>
