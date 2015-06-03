@@ -277,8 +277,12 @@ img.fit {
 }
 /* Search */
 
-.search .container {
-    padding: 15px;
+.search {
+    padding-bottom: 15px;
+}
+
+.search > div.row {
+    padding-bottom: 10px;
 }
 
 .search input {

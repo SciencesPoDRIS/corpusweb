@@ -46,9 +46,102 @@
             $scope.totalItems = 0;
             $scope.currentPage = 1;
             $scope.numPerPage = 12;
+            var authorsTypes = new Array();
             var ids = new Array();
             var begin = 0;
             var end = 0;
+
+            // #TODO : Put it into a config file
+            $scope.authorsTypes = [
+                {
+                    name : 'association/non-profit organization',
+                    isSelectedByDefault : true
+                },
+                {
+                    name : 'blogger',
+                    isSelectedByDefault : true
+                },
+                // {
+                //     name : 'academic',
+                //     isSelectedByDefault : true
+                // },
+                {
+                    name : 'institution',
+                    isSelectedByDefault : true
+                },
+                // {
+                //     name : 'agency',
+                //     isSelectedByDefault : true
+                // },
+                // {
+                //     name : 'media',
+                //     isSelectedByDefault : true
+                // },
+                {
+                    name : 'activist',
+                    isSelectedByDefault : true
+                },
+                // {
+                //     name : 'political_party',
+                //     isSelectedByDefault : true
+                // },
+                {
+                    name : 'politician',
+                    isSelectedByDefault : true
+                },
+                // {
+                //     name : 'trade_union',
+                //     isSelectedByDefault : true
+                // },
+                {
+                    name : 'think tank',
+                    isSelectedByDefault : true
+                },
+                // {
+                //     name : 'university',
+                //     isSelectedByDefault : true
+                // },
+                // {
+                //     name : 'journalist',
+                //     isSelectedByDefault : true
+                // },
+                // {
+                //     name : 'polling_institute',
+                //     isSelectedByDefault : true
+                // },
+                {
+                    name : 'NGO',
+                    isSelectedByDefault : true
+                },
+                {
+                    name : 'initiative',
+                    isSelectedByDefault : true
+                },
+                // {
+                //     name : 'event',
+                //     isSelectedByDefault : true
+                // },
+                {
+                    name : 'research institution',
+                    isSelectedByDefault : true
+                },
+                {
+                    name : 'company',
+                    isSelectedByDefault : true
+                },
+                {
+                    name : 'research project',
+                    isSelectedByDefault : true
+                },
+                {
+                    name : 'governmental project',
+                    isSelectedByDefault : true
+                },
+                {
+                    name : 'other',
+                    isSelectedByDefault : true
+                }
+            ];
 
             $scope.init = function() {
                 // Load the graph
@@ -75,10 +168,18 @@
 
             /* Filter the results on the query term */
             $scope.filter = function() {
+                authorsTypes = new Array();
+                jQuery.each($scope.authorsTypes, function(index, item) {
+                    if(item.isSelectedByDefault) {
+                        authorsTypes.push(item.name);
+                    }
+                });
                 ids = new Array();
                 $scope.currentPage = 1;
                 $scope.filteredResults = $scope.allResults.filter(function(item) {
-                    if ((item.NOM.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0) || (item["type d'acteur"].toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0)) {
+                    if (((item.NOM.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0)
+                        || (item["type d'acteur"].toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0))
+                        && (authorsTypes.indexOf(item["type d'acteur"]) >= 0)) {
                         ids.push(item.ID);
                         return true;
                     } else {
@@ -102,50 +203,50 @@
                 $scope.graph.graph.nodes().forEach(function(node) {
                     if (ids.indexOf(node.id) != -1) {
                         // #TODO : Put it into a config file
-                        switch(node.attributes["type d'acteur"]) {
-                            case 'blogueur' :
+                        switch (node.attributes["type d'acteur"]) {
+                            case 'blogueur':
                                 node.color = '#1244dc';
                                 break;
-                            case 'think tank' :
+                            case 'think tank':
                                 node.color = '#c070ff';
                                 break;
-                            case 'institution' :
+                            case 'institution':
                                 node.color = '#c212dc';
                                 break;
-                            case 'initiative' :
+                            case 'initiative':
                                 node.color = '#12dc44';
                                 break;
-                            case 'ONG' :
+                            case 'ONG':
                                 node.color = '#c22900';
                                 break;
-                            case 'entreprise' :
+                            case 'entreprise':
                                 node.color = '#ad94ff';
                                 break;
-                            case 'autre' :
+                            case 'autre':
                                 node.color = '#c1c1c1';
                                 break;
-                            case 'expert/chercheur' :
+                            case 'expert/chercheur':
                                 node.color = '#dc4512';
                                 break;
-                            case 'politique' :
+                            case 'politique':
                                 node.color = '#bdbdbd';
                                 break;
-                            case 'militant' :
+                            case 'militant':
                                 node.color = '#1290dc';
                                 break;
-                            case 'projet gouvernemental' :
+                            case 'projet gouvernemental':
                                 node.color = '#ff7097';
                                 break;
-                            case 'projet de recherche' :
-                                node.color  = '#b9b9b9';
+                            case 'projet de recherche':
+                                node.color = '#b9b9b9';
                                 break;
-                            case 'association/organisation Ã  but non lucratif' :
+                            case 'association/organisation Ã  but non lucratif':
                                 node.color = '#77dc12';
                                 break;
-                            case 'institut' :
+                            case 'institut':
                                 node.color = '#c2dc12';
                                 break;
-                            default :
+                            default:
                                 console.log('Error : no color setted for actor\'s type : ' + node.attributes["type d'acteur"]);
                                 break;
                         }
@@ -184,7 +285,7 @@
 
     app.run(function($rootScope, $location) {
         $rootScope.$on('$routeChangeSuccess', function() {
-            // ga('send', 'pageview', $location.path());
+            // #TODO : Put it into a config file
             ga('create', 'UA-63565327-1', 'auto');
             ga('send', 'pageview');
         });
