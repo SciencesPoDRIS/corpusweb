@@ -279,6 +279,7 @@ img.fit {
 
 .search {
     padding-bottom: 15px;
+    text-align: center;
 }
 
 .search > div.row {
@@ -314,6 +315,23 @@ img.fit {
 
 .search .media img {
     padding: 3px;
+}
+
+.search .btn-danger {
+    color: #e6142d;
+    background-color: #fff;
+    border-color: #ac2925;
+}
+
+.search .btn-danger.active,
+.search .btn-danger.focus,
+.search .btn-danger:active,
+.search .btn-danger:focus,
+.search .btn-danger:hover,
+.search .open > .dropdown-toggle.btn-danger {
+    color: #fff;
+    background-color: #e6142d;
+    border-color: #ac2925;
 }
 
 .pagination>li>a,
@@ -356,6 +374,10 @@ md-grid-tile img,
     border-radius: 0 0 1.1em 1.1em;
 }
 
+.tile-footer {
+    padding: 0 10px;
+}
+
 .grayscale {
     /* for Webkit browsere, Chrome 19+, Safari 6+ ... */
     
@@ -380,6 +402,10 @@ md-grid-tile img,
 .tile-footer h3 {
     font-size: 1.1em;
     font-weight: bold;
+    margin-left: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 /* Tab Cartography */
 

@@ -46,101 +46,145 @@
             $scope.totalItems = 0;
             $scope.currentPage = 1;
             $scope.numPerPage = 12;
-            var authorsTypes = new Array();
+            var actorsTypes = new Array();
             var ids = new Array();
             var begin = 0;
             var end = 0;
 
             // #TODO : Put it into a config file
-            $scope.authorsTypes = [
+            $scope.actorsTypes = [
                 {
-                    name : 'association/non-profit organization',
-                    isSelectedByDefault : true
+                    id: 'blogger',
+                    name: 'Blogger',
+                    isSelected: true,
+                    color: '#D7DF60'
                 },
                 {
-                    name : 'blogger',
-                    isSelectedByDefault : true
-                },
-                // {
-                //     name : 'academic',
-                //     isSelectedByDefault : true
-                // },
-                {
-                    name : 'institution',
-                    isSelectedByDefault : true
-                },
-                // {
-                //     name : 'agency',
-                //     isSelectedByDefault : true
-                // },
-                // {
-                //     name : 'media',
-                //     isSelectedByDefault : true
-                // },
-                {
-                    name : 'activist',
-                    isSelectedByDefault : true
-                },
-                // {
-                //     name : 'political_party',
-                //     isSelectedByDefault : true
-                // },
-                {
-                    name : 'politician',
-                    isSelectedByDefault : true
-                },
-                // {
-                //     name : 'trade_union',
-                //     isSelectedByDefault : true
-                // },
-                {
-                    name : 'think tank',
-                    isSelectedByDefault : true
-                },
-                // {
-                //     name : 'university',
-                //     isSelectedByDefault : true
-                // },
-                // {
-                //     name : 'journalist',
-                //     isSelectedByDefault : true
-                // },
-                // {
-                //     name : 'polling_institute',
-                //     isSelectedByDefault : true
-                // },
-                {
-                    name : 'NGO',
-                    isSelectedByDefault : true
+                    id: 'institution',
+                    name: 'Institution',
+                    isSelected: true,
+                    color: '#E8B0D8'
                 },
                 {
-                    name : 'initiative',
-                    isSelectedByDefault : true
-                },
-                // {
-                //     name : 'event',
-                //     isSelectedByDefault : true
-                // },
-                {
-                    name : 'research institution',
-                    isSelectedByDefault : true
+                    ID: 'association/non-profit organization',
+                    name: 'Association/non-profit organization',
+                    isSelected: true,
+                    color: '#7AE0B2'
                 },
                 {
-                    name : 'company',
-                    isSelectedByDefault : true
+                    id: 'initiative',
+                    name: 'Initiative',
+                    isSelected: true,
+                    color: '#ECAC68'
                 },
                 {
-                    name : 'research project',
-                    isSelectedByDefault : true
+                    id: 'think tank',
+                    name: 'Think tank',
+                    isSelected: true,
+                    color: '#F1A49E'
                 },
                 {
-                    name : 'governmental project',
-                    isSelectedByDefault : true
+                    id: 'NGO',
+                    name: 'NGO',
+                    isSelected: true,
+                    color: '#7EDADC'
                 },
                 {
-                    name : 'other',
-                    isSelectedByDefault : true
+                    id: 'activist',
+                    name: 'Activist',
+                    isSelected: true,
+                    color: '#B4C5E3'
+                },
+                {
+                    id: 'research institution',
+                    name: 'Research institution',
+                    isSelected: true,
+                    color: '#ABE18C'
+                },
+                {
+                    id: 'other',
+                    name: 'Other',
+                    isSelected: true,
+                    color: '#D6C571'
                 }
+                // {
+                //     id : 'academic',
+                //     name: 'Academic',
+                //     isSelected : true,
+                //     color: ''
+                // },
+                // {
+                //     id : 'agency',
+                //     name: 'Agency',
+                //     isSelected : true,
+                //     color: ''
+                // },
+                // {
+                //     id : 'company',
+                //     name: 'Company',
+                //     isSelected : true,
+                //     color: ''
+                // },
+                // {
+                //     id : 'event',
+                //     name: 'Event',
+                //     isSelected : true,
+                //     color: ''
+                // },
+                // {
+                //     id : 'governmental project',
+                //     name: 'Governmental project',
+                //     isSelected : true,
+                //     color: ''
+                // },
+                // {
+                //     id : 'journalist',
+                //     name: 'Journalist',
+                //     isSelected : true,
+                //     color: ''
+                // },
+                // {
+                //     id : 'media',
+                //     name: 'Media',
+                //     isSelected : true,
+                //     color: ''
+                // },
+                // {
+                //     id : 'political_party',
+                //     name: 'Political party',
+                //     isSelected : true,
+                //     color: ''
+                // },
+                // {
+                //     id : 'politician',
+                //     name: 'Politician',
+                //     isSelected : true,
+                //     color: ''
+                // },
+                // {
+                //     id : 'polling_institute',
+                //     name: 'Polling Institute',
+                //     isSelected : true,
+                //     color: ''
+                // },
+                // {
+                //     id : 'research project',
+                //     name: 'Research project',
+                //     isSelected : true,
+                //     color: ''
+                // },
+                // {
+                //     id : 'trade_union',
+                //     name: 'Trade union',
+                //     isSelected : true,
+                //     color: ''
+                // },
+                // {
+                //     id : 'university',
+                //     name: 'University',
+                //     isSelected : true,
+                //     color: ''
+                // }
             ];
 
             $scope.init = function() {
@@ -168,18 +212,16 @@
 
             /* Filter the results on the query term */
             $scope.filter = function() {
-                authorsTypes = new Array();
-                jQuery.each($scope.authorsTypes, function(index, item) {
-                    if(item.isSelectedByDefault) {
-                        authorsTypes.push(item.name);
+                actorsTypes = new Array();
+                jQuery.each($scope.actorsTypes, function(index, item) {
+                    if (item.isSelected) {
+                        actorsTypes.push(item.id);
                     }
                 });
                 ids = new Array();
                 $scope.currentPage = 1;
                 $scope.filteredResults = $scope.allResults.filter(function(item) {
-                    if (((item.NOM.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0)
-                        || (item["type d'acteur"].toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0))
-                        && (authorsTypes.indexOf(item["type d'acteur"]) >= 0)) {
+                    if (((item.NOM.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0) || (item["type d'acteur"].toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0)) && (actorsTypes.indexOf(item["type d'acteur"]) >= 0)) {
                         ids.push(item.ID);
                         return true;
                     } else {
@@ -202,54 +244,7 @@
                 // Color selected nodes into red
                 $scope.graph.graph.nodes().forEach(function(node) {
                     if (ids.indexOf(node.id) != -1) {
-                        // #TODO : Put it into a config file
-                        switch (node.attributes["type d'acteur"]) {
-                            case 'blogueur':
-                                node.color = '#1244dc';
-                                break;
-                            case 'think tank':
-                                node.color = '#c070ff';
-                                break;
-                            case 'institution':
-                                node.color = '#c212dc';
-                                break;
-                            case 'initiative':
-                                node.color = '#12dc44';
-                                break;
-                            case 'ONG':
-                                node.color = '#c22900';
-                                break;
-                            case 'entreprise':
-                                node.color = '#ad94ff';
-                                break;
-                            case 'autre':
-                                node.color = '#c1c1c1';
-                                break;
-                            case 'expert/chercheur':
-                                node.color = '#dc4512';
-                                break;
-                            case 'politique':
-                                node.color = '#bdbdbd';
-                                break;
-                            case 'militant':
-                                node.color = '#1290dc';
-                                break;
-                            case 'projet gouvernemental':
-                                node.color = '#ff7097';
-                                break;
-                            case 'projet de recherche':
-                                node.color = '#b9b9b9';
-                                break;
-                            case 'association/organisation Ã  but non lucratif':
-                                node.color = '#77dc12';
-                                break;
-                            case 'institut':
-                                node.color = '#c2dc12';
-                                break;
-                            default:
-                                console.log('Error : no color setted for actor\'s type : ' + node.attributes["type d'acteur"]);
-                                break;
-                        }
+                        node.color = $scope.actorsTypes.filter(function(item) {return item.id == node.attributes["type d'acteur"]})[0].color;
                     }
                 });
                 $scope.graph.refresh();
