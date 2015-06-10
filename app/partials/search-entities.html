@@ -8,7 +8,7 @@
         </div>
         <div class="row col-md-12">
             <div class="btn-group">
-                <label class="btn btn-danger" ng-model="authorsType.isSelectedByDefault" btn-checkbox ng-change="filter()" ng-repeat="authorsType in authorsTypes">{{authorsType.name}}</label>
+                <label class="btn btn-danger" ng-model="actorsType.isSelected" btn-checkbox ng-change="filter()" ng-repeat="actorsType in actorsTypes">{{actorsType.name}}</label>
             </div>
         </div>
     </div>
@@ -21,6 +21,7 @@
                         <img class="fit grayscale" src="https://api.pagelr.com/capture?uri={{result.URL}}&width=400&height=300"></img>
                         <md-grid-tile-footer class="tile-footer">
                             <h3>{{result.NOM}}</h3>
+                            {{result["type d'acteur"]}}
                         </md-grid-tile-footer>
                     </md-grid-tile>
                 </md-grid-list>
@@ -31,22 +32,7 @@
             <div id="graph"></div>
             <div class="row">
                 <div id="key" class="col-md-6">
-                    <div class="key-item active"><span class="key-color" style="background-color:rgb(18,68,220);">&nbsp;&nbsp;&nbsp;</span> Blogger</div>
-                    <div class="key-item active"><span class="key-color" style="background-color:rgb(194,18,220);">&nbsp;&nbsp;&nbsp;</span> Institution</div>
-                    <div class="key-item active"><span class="key-color" style="background-color:rgb(119,220,18);">&nbsp;&nbsp;&nbsp;</span> Association/non-profit organization</div>
-                    <div class="key-item active"><span class="key-color" style="background-color:rgb(255,112,151);">&nbsp;&nbsp;&nbsp;</span> Governmental project</div>
-                    <div class="key-item active"><span class="key-color" style="background-color:rgb(18,220,68);">&nbsp;&nbsp;&nbsp;</span> Initiative</div>
-                    <div class="key-item active"><span class="key-color" style="background-color:rgb(192,112,255);">&nbsp;&nbsp;&nbsp;</span> Think tank</div>
-                    <div class="key-item active"><span class="key-color" style="background-color:rgb(220,169,18);">&nbsp;&nbsp;&nbsp;</span> Academic</div>
-                </div>
-                <div id="key2" class="col-md-6">
-                    <div class="key-item active"><span class="key-color" style="background-color:rgb(194,41,0);">&nbsp;&nbsp;&nbsp;</span> NGO</div>
-                    <div class="key-item active"><span class="key-color" style="background-color:rgb(18,144,220);">&nbsp;&nbsp;&nbsp;</span> Activist</div>
-                    <div class="key-item active"><span class="key-color" style="background-color:rgb(194,220,18);">&nbsp;&nbsp;&nbsp;</span> Research institution</div>
-                    <div class="key-item active"><span class="key-color" style="background-color:rgb(173,148,255);">&nbsp;&nbsp;&nbsp;</span> Company</div>
-                    <div class="key-item active"><span class="key-color" style="background-color:rgb(185,185,185);">&nbsp;&nbsp;&nbsp;</span> Research project</div>
-                    <div class="key-item active"><span class="key-color" style="background-color:rgb(193,193,193);">&nbsp;&nbsp;&nbsp;</span> Other</div>
-                    <div class="key-item active"><span class="key-color" style="background-color:rgb(189,189,189);">&nbsp;&nbsp;&nbsp;</span> Politician</div>
+                    <div class="key-item active" ng-repeat="actorsType in actorsTypes"><span class="key-color" style="background-color: {{actorsType.color}};">&nbsp;&nbsp;&nbsp;</span> {{actorsType.name}}</div>
                 </div>
             </div>
         </div>
