@@ -2,6 +2,7 @@
     'use strict';
 
     var app = angular.module('corpusweb', [
+        'corpusweb.conf',
         'ui.bootstrap',
         'ngRoute',
         'ngMaterial'
@@ -241,7 +242,7 @@
                 $scope.graph.graph.nodes().forEach(function(node) {
                     node.color = '#d3d3d3';
                 });
-                // Color selected nodes into red
+                // Color only selected nodes
                 $scope.graph.graph.nodes().forEach(function(node) {
                     if (ids.indexOf(node.id) != -1) {
                         node.color = $scope.actorsTypes.filter(function(item) {return item.id == node.attributes["type d'acteur"]})[0].color;
@@ -271,18 +272,17 @@
     app.controller('ModalInstanceCtrl',
         function($scope, $modalInstance, item) {
             $scope.item = item;
-
             $scope.close = function() {
                 $modalInstance.close();
             };
         }
     );
 
-    app.run(function($rootScope, $location) {
+    app.run(function(googleAnalyticsId, $rootScope, $location) {
         $rootScope.$on('$routeChangeSuccess', function() {
-            // #TODO : Put it into a config file
-            ga('create', 'UA-63565327-1', 'auto');
+            ga('create', googleAnalyticsId, 'auto');
             ga('send', 'pageview');
         });
     });
+
 })();
