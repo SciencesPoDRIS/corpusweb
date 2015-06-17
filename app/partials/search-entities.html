@@ -8,7 +8,7 @@
         </div>
         <div class="row col-md-12">
             <div class="btn-group">
-                <label class="btn btn-danger" ng-model="actorsType.isSelected" btn-checkbox ng-change="filter()" ng-repeat="actorsType in actorsTypes">{{actorsType.name}}</label>
+                <label class="btn btn-danger" ng-model="actorsType.isSelected" btn-checkbox ng-change="filter()" ng-repeat="actorsType in actorsTypesCollection">{{actorsType.name}}</label>
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@
             <div id="graph"></div>
             <div class="row">
                 <div id="key" class="col-md-6">
-                    <div class="key-item active" ng-repeat="actorsType in actorsTypes"><span class="key-color" style="background-color: {{actorsType.color}};">&nbsp;&nbsp;&nbsp;</span> {{actorsType.name}}</div>
+                    <div class="key-item active" ng-repeat="actorsType in actorsTypesCollection"><span class="key-color" style="background-color: {{actorsType.color}};">&nbsp;&nbsp;&nbsp;</span> {{actorsType.name}}</div>
                 </div>
             </div>
         </div>

@@ -41,152 +41,17 @@
         }
     ]);
 
-    app.controller('QueryController', ['$scope', '$http', '$modal',
-        function($scope, $http, $modal) {
+    app.controller('QueryController', ['actorsTypesCollection', '$scope', '$http', '$modal',
+        function(actorsTypesCollection, $scope, $http, $modal) {
             $scope.queryTerm = '';
             $scope.totalItems = 0;
             $scope.currentPage = 1;
             $scope.numPerPage = 12;
+            $scope.actorsTypesCollection = actorsTypesCollection;
             var actorsTypes = new Array();
             var ids = new Array();
             var begin = 0;
             var end = 0;
-
-            // #TODO : Put it into a config file
-            $scope.actorsTypes = [
-                {
-                    id: 'blogger',
-                    name: 'Blogger',
-                    isSelected: true,
-                    color: '#D7DF60'
-                },
-                {
-                    id: 'institution',
-                    name: 'Institution',
-                    isSelected: true,
-                    color: '#E8B0D8'
-                },
-                {
-                    ID: 'association/non-profit organization',
-                    name: 'Association/non-profit organization',
-                    isSelected: true,
-                    color: '#7AE0B2'
-                },
-                {
-                    id: 'initiative',
-                    name: 'Initiative',
-                    isSelected: true,
-                    color: '#ECAC68'
-                },
-                {
-                    id: 'think tank',
-                    name: 'Think tank',
-                    isSelected: true,
-                    color: '#F1A49E'
-                },
-                {
-                    id: 'NGO',
-                    name: 'NGO',
-                    isSelected: true,
-                    color: '#7EDADC'
-                },
-                {
-                    id: 'activist',
-                    name: 'Activist',
-                    isSelected: true,
-                    color: '#B4C5E3'
-                },
-                {
-                    id: 'research institution',
-                    name: 'Research institution',
-                    isSelected: true,
-                    color: '#ABE18C'
-                },
-                {
-                    id: 'other',
-                    name: 'Other',
-                    isSelected: true,
-                    color: '#D6C571'
-                }
-                // {
-                //     id : 'academic',
-                //     name: 'Academic',
-                //     isSelected : true,
-                //     color: ''
-                // },
-                // {
-                //     id : 'agency',
-                //     name: 'Agency',
-                //     isSelected : true,
-                //     color: ''
-                // },
-                // {
-                //     id : 'company',
-                //     name: 'Company',
-                //     isSelected : true,
-                //     color: ''
-                // },
-                // {
-                //     id : 'event',
-                //     name: 'Event',
-                //     isSelected : true,
-                //     color: ''
-                // },
-                // {
-                //     id : 'governmental project',
-                //     name: 'Governmental project',
-                //     isSelected : true,
-                //     color: ''
-                // },
-                // {
-                //     id : 'journalist',
-                //     name: 'Journalist',
-                //     isSelected : true,
-                //     color: ''
-                // },
-                // {
-                //     id : 'media',
-                //     name: 'Media',
-                //     isSelected : true,
-                //     color: ''
-                // },
-                // {
-                //     id : 'political_party',
-                //     name: 'Political party',
-                //     isSelected : true,
-                //     color: ''
-                // },
-                // {
-                //     id : 'politician',
-                //     name: 'Politician',
-                //     isSelected : true,
-                //     color: ''
-                // },
-                // {
-                //     id : 'polling_institute',
-                //     name: 'Polling Institute',
-                //     isSelected : true,
-                //     color: ''
-                // },
-                // {
-                //     id : 'research project',
-                //     name: 'Research project',
-                //     isSelected : true,
-                //     color: ''
-                // },
-                // {
-                //     id : 'trade_union',
-                //     name: 'Trade union',
-                //     isSelected : true,
-                //     color: ''
-                // },
-                // {
-                //     id : 'university',
-                //     name: 'University',
-                //     isSelected : true,
-                //     color: ''
-                // }
-            ];
 
             $scope.init = function() {
                 // Load the graph
@@ -214,7 +79,7 @@
             /* Filter the results on the query term */
             $scope.filter = function() {
                 actorsTypes = new Array();
-                jQuery.each($scope.actorsTypes, function(index, item) {
+                jQuery.each(actorsTypesCollection, function(index, item) {
                     if (item.isSelected) {
                         actorsTypes.push(item.id);
                     }
@@ -245,7 +110,7 @@
                 // Color only selected nodes
                 $scope.graph.graph.nodes().forEach(function(node) {
                     if (ids.indexOf(node.id) != -1) {
-                        node.color = $scope.actorsTypes.filter(function(item) {return item.id == node.attributes["type d'acteur"]})[0].color;
+                        node.color = actorsTypesCollection.filter(function(item) {return item.id == node.attributes["type d'acteur"]})[0].color;
                     }
                 });
                 $scope.graph.refresh();

@@ -11,4 +11,4 @@ data/*
 #
 # Conf files
 #
-conf/conf.js
+app/conf/conf.js
