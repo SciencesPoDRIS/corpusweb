@@ -31,9 +31,7 @@
         <div class="col-md-6">
             <div id="graph"></div>
             <div class="row">
-                <div id="key" class="col-md-6">
-                    <div class="key-item active" ng-repeat="actorsType in actorsTypesCollection"><span class="key-color" style="background-color: {{actorsType.color}};">&nbsp;&nbsp;&nbsp;</span> {{actorsType.name}}</div>
-                </div>
+                <legend source="actorsTypesCollection" columns-number="2"/>
             </div>
         </div>
     </div>

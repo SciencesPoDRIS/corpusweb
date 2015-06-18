@@ -110,7 +110,9 @@
                 // Color only selected nodes
                 $scope.graph.graph.nodes().forEach(function(node) {
                     if (ids.indexOf(node.id) != -1) {
-                        node.color = actorsTypesCollection.filter(function(item) {return item.id == node.attributes["type d'acteur"]})[0].color;
+                        node.color = actorsTypesCollection.filter(function(item) {
+                            return item.id == node.attributes["type d'acteur"]
+                        })[0].color;
                     }
                 });
                 $scope.graph.refresh();
@@ -148,6 +150,26 @@
             ga('create', googleAnalyticsId, 'auto');
             ga('send', 'pageview');
         });
+    });
+
+    app.directive('legend', function() {
+        return {
+            restrict: 'E',
+            scope: {
+                source: '=',
+                columnsNumber: '=columnsNumber'
+            },
+            controller: function($scope) {
+                var elementsByColumn = Math.ceil($scope.source.length / $scope.columnsNumber);
+                $scope.data = new Array($scope.columnsNumber);
+                for(var i = 0; i < $scope.columnsNumber; i++) {
+                    $scope.data[i] = $scope.source.slice(i * elementsByColumn, (i + 1) * elementsByColumn);
+                }
+                $scope.columnWidth = 12 / $scope.columnsNumber;
+            },
+            templateUrl: 'partials/graph-legend.html',
+            replace: true
+        };
     });
 
 })();
