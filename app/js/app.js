@@ -60,12 +60,15 @@
                         container: 'graph',
                         settings: {
                             defaultEdgeColor: '#d3d3d3',
-                            edgeColor: '#d3d3d3',
+                            edgeColor: 'default',
                             labelThreshold: 100
                         }
                     },
                     function(s) {
                         $scope.graph = s;
+                        $scope.graph.bind('clickNode', function(e) {
+                          $scope.viewEntity(e.data.node.attributes);
+                        });
                         $scope.graph.refresh();
                         // Load all results
                         $http.get('../data/COP21.csv').success(function(data) {
