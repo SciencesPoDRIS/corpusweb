@@ -15,7 +15,7 @@
                 templateUrl: 'partials/search-entities.html',
                 controller: 'QueryController'
             }).
-            when('/description', {
+            when('/description/', {
                 templateUrl: 'partials/description.html',
                 controller: 'CorpusCtrl'
             }).
@@ -25,18 +25,22 @@
         }
     ]);
 
-    app.controller('CorpusSnippetCtrl', ['$scope', '$http',
-        function($scope, $http) {
-            $http.get('../data/corpora.json').success(function(data) {
-                $scope.corpus = data.corpora[0];
+    app.controller('CorpusSnippetCtrl', ['$scope', 'loadCorpora',
+        function($scope, loadCorpora) {
+            loadCorpora.getCorpora().then(function(data) {
+                $scope.corpus = data[0];
             });
         }
     ]);
 
-    app.controller('CorpusCtrl', ['$scope', '$http',
-        function($scope, $http) {
-            $http.get('../data/corpora.json').success(function(data) {
-                $scope.corpus = data.corpora[0];
+    app.controller('CorpusCtrl', ['$scope', '$sce', 'loadCorpora',
+        function($scope, $sce, loadCorpora) {
+            loadCorpora.getCorpora().then(function(data) {
+                $scope.corpus = data[0];
+                $scope.purpose = $sce.trustAsHtml(data[0].purpose);
+                $scope.selection = $sce.trustAsHtml(data[0].selection);
+                $scope.indexing = $sce.trustAsHtml(data[0].indexing);
+                $scope.footnote = $sce.trustAsHtml(data[0].footnote);
             });
         }
     ]);
@@ -66,8 +70,26 @@
                     },
                     function(s) {
                         $scope.graph = s;
+                        // Open modal on click on a node of the graph
                         $scope.graph.bind('clickNode', function(e) {
-                          $scope.viewEntity(e.data.node.attributes);
+                            $scope.viewEntity(e.data.node.attributes);
+                        });
+                        // On node hover, color in red all the connected edges
+                        $scope.graph.bind('overNode', function(n) {
+                            // Get the connected edges
+                            $scope.graph.graph.edges().forEach(function(e) {
+                                if (e.source == n.data.node.id || e.target == n.data.node.id) {
+                                    e.color = '#e6142d';
+                                }
+                            });
+                            $scope.graph.refresh();
+                        });
+                        // On node out, reset all edges color to the default one
+                        $scope.graph.bind('outNode', function(e) {
+                            $scope.graph.graph.edges().forEach(function(e) {
+                                e.color = '#d3d3d3';
+                            });
+                            $scope.graph.refresh();
                         });
                         $scope.graph.refresh();
                         // Load all results
@@ -106,9 +128,12 @@
                 begin = ($scope.currentPage - 1) * 10;
                 end = begin + $scope.numPerPage;
                 $scope.displayedResults = $scope.filteredResults.slice(begin, end);
-                // Reset all nodes' color to the light grey
                 $scope.graph.graph.nodes().forEach(function(node) {
+                    // Reset all nodes' color to the light grey
                     node.color = '#d3d3d3';
+                    // #TODO : to improve
+                    // Change default label by the value of the column "NOM"
+                    node.label = node.attributes.NOM;
                 });
                 // Color only selected nodes
                 $scope.graph.graph.nodes().forEach(function(node) {
@@ -148,6 +173,19 @@
         }
     );
 
+    // Create factory to load the json corpora
+    app.factory('loadCorpora', ['$http',
+        function($http) {
+            return {
+                getCorpora: function() {
+                    return $http.get('../data/corpora.json').then(function(data) {
+                        return data.data.corpora;
+                    });
+                }
+            }
+        }
+    ]);
+
     app.run(function(googleAnalyticsId, $rootScope, $location) {
         $rootScope.$on('$routeChangeSuccess', function() {
             ga('create', googleAnalyticsId, 'auto');
@@ -165,7 +203,7 @@
             controller: function($scope) {
                 var elementsByColumn = Math.ceil($scope.source.length / $scope.columnsNumber);
                 $scope.data = new Array($scope.columnsNumber);
-                for(var i = 0; i < $scope.columnsNumber; i++) {
+                for (var i = 0; i < $scope.columnsNumber; i++) {
                     $scope.data[i] = $scope.source.slice(i * elementsByColumn, (i + 1) * elementsByColumn);
                 }
                 $scope.columnWidth = 12 / $scope.columnsNumber;
