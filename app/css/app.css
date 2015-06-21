@@ -286,7 +286,7 @@ img.fit {
     padding-bottom: 10px;
 }
 
-.search input {
+.search input.full-width {
     display: inline;
     width: 95%;
 }
@@ -306,6 +306,10 @@ img.fit {
 .search md-input-container.md-default-theme:not(.md-input-invalid).md-input-focused .md-input {
     border-bottom: 1px solid #e6142d;
     padding-bottom: 1px;
+}
+
+.search .facet {
+    text-align: left;
 }
 
 .search input[type=checkbox] {

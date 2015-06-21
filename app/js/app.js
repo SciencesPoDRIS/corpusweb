@@ -5,7 +5,8 @@
         'corpusweb.conf',
         'ui.bootstrap',
         'ngRoute',
-        'ngMaterial'
+        'ngMaterial',
+        'elasticsearch'
     ]);
 
     app.config(['$routeProvider',
@@ -45,8 +46,8 @@
         }
     ]);
 
-    app.controller('QueryController', ['actorsTypesCollection', '$scope', '$http', '$modal',
-        function(actorsTypesCollection, $scope, $http, $modal) {
+    app.controller('QueryController', ['actorsTypesCollection', '$scope', '$http', '$modal', 'es', 'elasticSearchIndex',
+        function(actorsTypesCollection, $scope, $http, $modal, es, elasticSearchIndex) {
             $scope.queryTerm = '';
             $scope.totalItems = 0;
             $scope.currentPage = 1;
@@ -56,6 +57,43 @@
             var ids = new Array();
             var begin = 0;
             var end = 0;
+
+            $scope.retrieveFacets = function() {
+                es.search({
+                    index: elasticSearchIndex,
+                    size: 10,
+                    body: {
+                        "aggs": {
+                            "indegree": {
+                                "terms": {
+                                    "field": "indegree"
+                                }
+                            },
+                            "crawling status": {
+                                "terms": {
+                                    "field": "crawling status"
+                                }
+                            }
+                        }
+                    }
+                }).then(function(response) {
+                    $scope.facets = new Array();
+                    // Format facets as an array of JSON objects
+                    $.each(response.aggregations, function(item, value) {
+                        var o = new Object();
+                        o.name = item;
+                        o.values = value.buckets;
+                        // Select all item of all factes by default
+                        $.each(o.values, function(i, v) {
+                            v.selected = true;
+                        });
+                        // Filter all facets that have only one different value
+                        if(value.buckets.length > 1) {
+                            $scope.facets.push(o);
+                        }
+                    });
+                });
+            }
 
             $scope.init = function() {
                 // Load the graph
@@ -92,6 +130,8 @@
                             $scope.graph.refresh();
                         });
                         $scope.graph.refresh();
+                        // Load all facets
+                        $scope.retrieveFacets();
                         // Load all results
                         $http.get('../data/COP21.csv').success(function(data) {
                             $scope.allResults = $.csv.toObjects(data).slice(1);
@@ -104,7 +144,7 @@
             /* Filter the results on the query term */
             $scope.filter = function() {
                 actorsTypes = new Array();
-                jQuery.each(actorsTypesCollection, function(index, item) {
+                $.each(actorsTypesCollection, function(index, item) {
                     if (item.isSelected) {
                         actorsTypes.push(item.id);
                     }
@@ -172,6 +212,13 @@
             };
         }
     );
+
+    // Create the es service from the esFactory
+    app.service('es', function(esFactory) {
+        return esFactory({
+            host: 'localhost:9200'
+        });
+    });
 
     // Create factory to load the json corpora
     app.factory('loadCorpora', ['$http',

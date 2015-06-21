@@ -1,14 +1,24 @@
 <div>
-    <div class="row search">
+    <div ng-class="['row', 'search']">
         <div class="row col-md-offset-3 col-md-6">
             <md-input-container md-no-float>
                 <span class="glyphicon glyphicon-search icon-flip-horizontal" aria-hidden="true"></span>
-                <span><input ng-model="queryTerm" type="text" placeholder="What are you looking for ?" ng-change="filter()" /></span>
+                <span><input ng-model="queryTerm" type="text" placeholder="What are you looking for ?" ng-change="filter();" ng-class="'full-width'"/></span>
             </md-input-container>
         </div>
+    </div>
+    <div class="row search">
         <div class="row col-md-12">
             <div class="btn-group">
-                <label class="btn btn-danger" ng-model="actorsType.isSelected" btn-checkbox ng-change="filter()" ng-repeat="actorsType in actorsTypesCollection">{{actorsType.name}}</label>
+                <label class="btn btn-danger" ng-model="actorsType.isSelected" btn-checkbox ng-change="filter();" ng-repeat="actorsType in actorsTypesCollection">{{actorsType.name}}</label>
+            </div>
+        </div>
+        <div ng-class="'col-md-12'">
+            <div ng-repeat="facet in facets" ng-class="['row', 'facet']">
+                <span ng-class="'col-md-3'">{{facet.name}}</span>
+                <span ng-class="['col-md-3', 'btn-group']" ng-repeat="item in facet.values">
+                    <input type="checkbox" name="{{facet.name}}" value="{{item.key}}" ng-model="item.selected" ng-change="filter();" aria-label="{{item.key}} <i>({{item.doc_count}})</i>"> {{item.key}} <i>({{item.doc_count}})</i>
+                </span>
             </div>
         </div>
     </div>
@@ -16,22 +26,21 @@
         <div class="col-md-6">
             <div ng-include="'partials/entity.html'"></div>
             <div class="row grid-list" flex="">
-                <md-grid-list md-cols-sm="1" md-cols-md="3" md-cols-gt-md="3" md-row-height-gt-md="4:3" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="10px">
+                <md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="2" md-row-height-gt-md="4:3" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="10px">
                     <md-grid-tile id="{{result.ID}}" ng-repeat="result in displayedResults" md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-class="gray" ng-click="viewEntity(result)">
                         <img class="fit grayscale" src="https://api.pagelr.com/capture?uri={{result.URL}}&width=400&height=300"></img>
                         <md-grid-tile-footer class="tile-footer">
-                            <h3>{{result.NOM}}</h3>
-                            {{result["type d'acteur"]}}
+                            <h3>{{result.NOM}}</h3> {{result["type d'acteur"]}}
                         </md-grid-tile-footer>
                     </md-grid-tile>
                 </md-grid-list>
-                <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="display()"></pagination>
+                <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="display();"></pagination>
             </div>
         </div>
         <div class="col-md-6">
             <div id="graph"></div>
             <div class="row">
-                <legend source="actorsTypesCollection" columns-number="2"/>
+                <legend source="actorsTypesCollection" columns-number="2" />
             </div>
         </div>
     </div>
