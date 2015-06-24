@@ -1,16 +1,16 @@
-<script type="text/ng-template" id="entity" class="entity">
-    <div class="modal-header" id="{{item.ID}}">
-        <h3 class="modal-title red">{{item.NOM}}</h3>
+<script type="text/ng-template" id="entity" ng-class="['entity']">
+    <div ng-class="['modal-header']" id="{{item.ID}}">
+        <h3 ng-class="['modal-title', 'red']">{{item.NOM}}</h3>
     </div>
-    <div class="modal-body">
-        <div class="modal-image">
+    <div ng-class="['modal-body']">
+        <div ng-class="['modal-image']">
             <img src="https://api.pagelr.com/capture?uri={{item.URL}}&width=400&height=300"></img>
         </div>
         <div>
             <a title="{{item.NAME}} | New window" href="{{item.URL}}" target="_blank">{{item.URL}}</a>
         </div>
     </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="close()">Close</button>
+    <div ng-class="['modal-footer']">
+        <button ng-class="['btn', 'btn-primary']" ng-click="close()">Close</button>
     </div>
 </script>

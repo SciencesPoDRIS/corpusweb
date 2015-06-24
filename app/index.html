@@ -1,9 +1,9 @@
 <!doctype html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="webcorpus" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="webcorpus" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="webcorpus" class="no-js lt-ie9"> <![endif]-->
+<!--[if lt IE 7]>      <html lang="en" ng-app="webcorpus" ng-class="['no-js', 'lt-ie9', 'lt-ie8', 'lt-ie7']"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="webcorpus" ng-class="['no-js', 'lt-ie9', 'lt-ie8']"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="webcorpus" ng-class="['no-js', 'lt-ie9']"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html lang="en" class="no-js">
+<html lang="en" ng-class="['no-js']">
 <!--<![endif]-->
 
 <head>
@@ -23,14 +23,14 @@
     <!-- Header -->
     <div ng-include="'partials/header.html'"></div>
     <!-- Main Content -->
-    <div class="content">
-        <div class="main-content container-fluid">
-            <div class="row corpus-snippet" ng-include="'partials/corpus-snippet.html'"></div>
-            <div class="row" ng-view></div>
+    <div ng-class="['content']">
+        <div ng-class="['main-content', 'container-fluid']">
+            <div ng-class="['row', 'corpus-snippet']" ng-include="'partials/corpus-snippet.html'"></div>
+            <div ng-class="['row']" ng-view></div>
         </div>
     </div>
     <!-- Footer -->
-    <div class="row" ng-include="'partials/footer.html'"></div>
+    <div ng-class="['row']" ng-include="'partials/footer.html'"></div>
     <!-- Project dependency libs -->
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/angular.min.js"></script>

@@ -1,21 +1,21 @@
 <div ng-controller="CorpusSnippetCtrl">
-    <div class="col-md-4 corpus-title">
+    <div ng-class="['col-md-4', 'corpus-title']">
         <h2>
             <a title="{{corpus.title}}" href="#/">
                 {{corpus.title}}<br/>
-                <p class="red subtitle">Bêta version</p>
-                <p class="red subsubtitle">Final version : fall 2015</p>
+                <p ng-class="['red', 'subtitle']">Bêta version</p>
+                <p ng-class="['red', 'subsubtitle']">Final version : fall 2015</p>
             </a>
         </h2>
     </div>
-    <div class="col-md-4 corpus-about">
+    <div ng-class="['col-md-4', 'corpus-about']">
         Our Methodology
         <p>
             Give an account of links between the different world actors working on and around the issue of climate change, through the network of web sites formed with Hyphe.<br/>
             <a title="Corpus Methodology" href="#/description/">Read more...</a>
         </p>
     </div>
-    <div class="col-md-4 corpus-resume">
+    <div ng-class="['col-md-4', 'corpus-resume']">
         <br/>
         <div><i>Last update : {{corpus.last_modification_date}}</i></div>
         <div><i>Authors : {{corpus.authors}}</i></div>
