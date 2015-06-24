@@ -5,8 +5,7 @@
         'webcorpus.conf',
         'ui.bootstrap',
         'ngRoute',
-        'ngMaterial',
-        'elasticsearch'
+        'ngMaterial'
     ]);
 
     app.config(['$routeProvider',
@@ -46,8 +45,8 @@
         }
     ]);
 
-    app.controller('QueryController', ['actorsTypesCollection', '$scope', '$http', '$modal', 'es', 'elasticSearchIndex',
-        function(actorsTypesCollection, $scope, $http, $modal, es, elasticSearchIndex) {
+    app.controller('QueryController', ['actorsTypesCollection', '$scope', '$http', '$modal',
+        function(actorsTypesCollection, $scope, $http, $modal) {
             $scope.queryTerm = '';
             $scope.totalItems = 0;
             $scope.currentPage = 1;
@@ -57,43 +56,6 @@
             var ids = new Array();
             var begin = 0;
             var end = 0;
-
-            $scope.retrieveFacets = function() {
-                es.search({
-                    index: elasticSearchIndex,
-                    size: 10,
-                    body: {
-                        "aggs": {
-                            "indegree": {
-                                "terms": {
-                                    "field": "indegree"
-                                }
-                            },
-                            "crawling status": {
-                                "terms": {
-                                    "field": "crawling status"
-                                }
-                            }
-                        }
-                    }
-                }).then(function(response) {
-                    $scope.facets = new Array();
-                    // Format facets as an array of JSON objects
-                    $.each(response.aggregations, function(item, value) {
-                        var o = new Object();
-                        o.name = item;
-                        o.values = value.buckets;
-                        // Select all item of all factes by default
-                        $.each(o.values, function(i, v) {
-                            v.selected = true;
-                        });
-                        // Filter all facets that have only one different value
-                        if(value.buckets.length > 1) {
-                            $scope.facets.push(o);
-                        }
-                    });
-                });
-            }
 
             $scope.init = function() {
                 // Load the graph
@@ -130,8 +92,6 @@
                             $scope.graph.refresh();
                         });
                         $scope.graph.refresh();
-                        // Load all facets
-                        $scope.retrieveFacets();
                         // Load all results
                         $http.get('../data/COP21.csv').success(function(data) {
                             $scope.allResults = $.csv.toObjects(data).slice(1);

@@ -7,21 +7,6 @@
             </md-input-container>
         </div>
     </div>
-    <div class="row search">
-        <div class="row col-md-12">
-            <div class="btn-group">
-                <label class="btn btn-danger" ng-model="actorsType.isSelected" btn-checkbox ng-change="filter();" ng-repeat="actorsType in actorsTypesCollection">{{actorsType.name}}</label>
-            </div>
-        </div>
-        <div ng-class="'col-md-12'">
-            <div ng-repeat="facet in facets" ng-class="['row', 'facet']">
-                <span ng-class="'col-md-3'">{{facet.name}}</span>
-                <span ng-class="['col-md-3', 'btn-group']" ng-repeat="item in facet.values">
-                    <input type="checkbox" name="{{facet.name}}" value="{{item.key}}" ng-model="item.selected" ng-change="filter();" aria-label="{{item.key}} <i>({{item.doc_count}})</i>"> {{item.key}} <i>({{item.doc_count}})</i>
-                </span>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-6">
             <div ng-include="'partials/entity.html'"></div>
