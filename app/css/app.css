@@ -151,7 +151,7 @@ ul#menu_appli li a {
     padding-top: 9px;
     position: relative;
     top: -9px;
-    width: 101px;
+    width: 106px;
 }
 
 .catalog_title a,
@@ -336,6 +336,10 @@ img.fit {
     color: #fff;
     background-color: #e6142d;
     border-color: #ac2925;
+}
+
+.results-count {
+    margin-bottom: 5px;
 }
 
 .pagination>li>a,
