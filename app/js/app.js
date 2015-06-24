@@ -103,17 +103,6 @@
                 );
             }
 
-            function applyMinDegreeFilter(e) {
-                var v = e.target.value;
-                _.$('min-degree-val').textContent = v;
-                filter
-                    .undo('min-degree')
-                    .nodesBy(function(n) {
-                        return this.degree(n.id) >= v;
-                    }, 'min-degree')
-                    .apply();
-            }
-
             /* Filter the results on the query term */
             $scope.filter = function() {
                 actorsTypes = new Array();
@@ -132,6 +121,7 @@
                         return false;
                     }
                 });
+                /* Filter nodes displayed on the graph */
                 filter.nodesBy(function(n) {
                     return ids.indexOf(n.id);
                 }).apply();
