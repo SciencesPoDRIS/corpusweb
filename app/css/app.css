@@ -398,7 +398,8 @@ md-grid-tile img,
     filter: gray;
 }
 
-.grayscale:hover {
+.grayscale:hover,
+.grayscale.hover {
     /* for Webkit browsere, Chrome 19+, Safari 6+ ... */
     
     -webkit-filter: initial;
