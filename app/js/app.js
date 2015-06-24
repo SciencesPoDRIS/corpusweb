@@ -86,13 +86,16 @@
                                 }
                             });
                             $scope.graph.refresh();
+                            // Simulate mouse hover effect on the tiles
+                            $('#' + n.data.node.id + ' img').addClass('hover');
                         });
                         // On node out, reset all edges color to the default one
-                        $scope.graph.bind('outNode', function(e) {
+                        $scope.graph.bind('outNode', function(n) {
                             $scope.graph.graph.edges().forEach(function(e) {
                                 e.color = '#d3d3d3';
                             });
                             $scope.graph.refresh();
+                            $('#' + n.data.node.id + ' img').removeClass('hover');
                         });
                         // Load all results
                         $http.get('../data/COP21.csv').success(function(data) {
@@ -127,7 +130,6 @@
                 }).apply();
                 $scope.totalItems = $scope.filteredResults.length;
                 $scope.display();
-                $scope.graph.refresh();
             }
 
             /* Filter the results to display the current page according to pagination */
