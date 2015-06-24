@@ -1,8 +1,8 @@
 (function() {
     'use strict';
 
-    var app = angular.module('corpusweb', [
-        'corpusweb.conf',
+    var app = angular.module('webcorpus', [
+        'webcorpus.conf',
         'ui.bootstrap',
         'ngRoute',
         'ngMaterial',
