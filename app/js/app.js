@@ -74,12 +74,12 @@
                         $scope.graph.bind('clickNode', function(e) {
                             $scope.viewEntity(e.data.node.attributes);
                         });
-                        // On node hover, color in red all the connected edges
+                        // On node hover, color all the connected edges in the node color
                         $scope.graph.bind('overNode', function(n) {
                             // Get the connected edges
                             $scope.graph.graph.edges().forEach(function(e) {
                                 if (e.source == n.data.node.id || e.target == n.data.node.id) {
-                                    e.color = '#e6142d';
+                                    e.color = n.data.node.color;
                                 }
                             });
                             $scope.graph.refresh();
@@ -91,7 +91,6 @@
                             });
                             $scope.graph.refresh();
                         });
-                        $scope.graph.refresh();
                         // Load all results
                         $http.get('../data/COP21.csv').success(function(data) {
                             $scope.allResults = $.csv.toObjects(data).slice(1);
@@ -121,6 +120,7 @@
                 });
                 $scope.totalItems = $scope.filteredResults.length;
                 $scope.display();
+                $scope.graph.refresh();
             }
 
             /* Filter the results to display the current page according to pagination */
@@ -131,7 +131,6 @@
                 $scope.graph.graph.nodes().forEach(function(node) {
                     // Reset all nodes' color to the light grey
                     node.color = '#d3d3d3';
-                    // #TODO : to improve
                     // Change default label by the value of the column "NOM"
                     node.label = node.attributes.NOM;
                 });
