@@ -56,6 +56,7 @@
             var ids = new Array();
             var begin = 0;
             var end = 0;
+            var filter;
 
             $scope.init = function() {
                 // Load the graph
@@ -69,6 +70,8 @@
                         }
                     },
                     function(s) {
+                        // Initialize the Sigma Filter API
+                        filter = new sigma.plugins.filter(s);
                         $scope.graph = s;
                         // Open modal on click on a node of the graph
                         $scope.graph.bind('clickNode', function(e) {
@@ -100,6 +103,17 @@
                 );
             }
 
+            function applyMinDegreeFilter(e) {
+                var v = e.target.value;
+                _.$('min-degree-val').textContent = v;
+                filter
+                    .undo('min-degree')
+                    .nodesBy(function(n) {
+                        return this.degree(n.id) >= v;
+                    }, 'min-degree')
+                    .apply();
+            }
+
             /* Filter the results on the query term */
             $scope.filter = function() {
                 actorsTypes = new Array();
@@ -118,6 +132,9 @@
                         return false;
                     }
                 });
+                filter.nodesBy(function(n) {
+                    return ids.indexOf(n.id);
+                }).apply();
                 $scope.totalItems = $scope.filteredResults.length;
                 $scope.display();
                 $scope.graph.refresh();
