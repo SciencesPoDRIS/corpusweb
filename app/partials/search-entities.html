@@ -10,7 +10,7 @@
             <div ng-repeat="actorsType in actorsTypesCollection" ng-class="['checkbox-inline', 'col-md-3']">
                 <label>
                     <input type="checkbox" ng-model="actorsType.isSelected" ng-change="filter();"/>
-                    <span>{{actorsType.name}}</span>
+                    <span>{{actorsType.name | limitTo : 15}}</span>
                 </label>
             </div>
         </div>
