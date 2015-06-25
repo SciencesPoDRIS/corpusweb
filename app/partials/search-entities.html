@@ -25,7 +25,20 @@
         </div>
         <div ng-class="['col-md-6']">
             <div id="graph"></div>
-            <div ng-class="['row']">
+            <div ng-class="['sigma-tools']">
+                <div ng-class="['btn-group-vertical']">
+                    <button type="button" ng-class="['btn', 'btn-link', 'btn-xs']" ng-click="sigmaCenter()" tooltip-placement="right" tooltip="Center">
+                        <span ng-class="['glyphicon', 'glyphicon-record']"></span>
+                    </button>
+                    <button type="button" ng-class="['btn', 'btn-link', 'btn-xs']" ng-click="sigmaZoom()" tooltip-placement="right" tooltip="Zoom">
+                        <span ng-class="['glyphicon', 'glyphicon-plus']"></span>
+                    </button>
+                    <button type="button" ng-class="['btn', 'btn-link', 'btn-xs']" ng-click="sigmaUnzoom()" tooltip-placement="right" tooltip="Unzoom">
+                        <span ng-class="['glyphicon', 'glyphicon-minus']"></span>
+                    </button>
+                </div>
+            </div>
+            <div ng-class="['row', 'legend']">
                 <legend source="actorsTypesCollection" columns-number="2" />
             </div>
         </div>

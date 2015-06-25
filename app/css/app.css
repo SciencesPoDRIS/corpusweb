@@ -68,16 +68,23 @@ a:visited {
 }
 
 ::-webkit-input-placeholder {
-   color: #6c6c6c;
+    color: #6c6c6c;
 }
-:-moz-placeholder { /* Firefox 18- */
-   color: #6c6c6c;  
+
+:-moz-placeholder {
+    /* Firefox 18- */
+    
+    color: #6c6c6c;
 }
-::-moz-placeholder {  /* Firefox 19+ */
-   color: #6c6c6c;  
+
+::-moz-placeholder {
+    /* Firefox 19+ */
+    
+    color: #6c6c6c;
 }
-:-ms-input-placeholder {  
-   color: #6c6c6c;  
+
+:-ms-input-placeholder {
+    color: #6c6c6c;
 }
 /* Header */
 
@@ -424,6 +431,23 @@ md-grid-tile img,
     height: 500px;
     margin-bottom: 10px;
     width: 100%;
+}
+
+.sigma-tools {
+    -webkit-box-shadow: 0px 1px 5px rgba(50, 20, 0, 0.20);
+    -moz-box-shadow: 0px 1px 5px rgba(50, 20, 0, 0.20);
+    box-shadow: 0px 1px 5px rgba(50, 20, 0, 0.20);
+    left: 28px;
+    position: absolute;
+    top: 12px;
+}
+
+.sigma-tools .btn-link {
+    background-color: #FFF;
+}
+
+.legend {
+    margin: 0;
 }
 /* Modal */
 

@@ -58,6 +58,32 @@
             var end = 0;
             var filter;
 
+            /* Center the whole graph */
+            $scope.sigmaCenter = function() {
+                var c = $scope.graph.cameras[0]
+                c.goTo({
+                    ratio: 1,
+                    x: 0,
+                    y: 0
+                })
+            }
+
+            /* Zoom on the graph */
+            $scope.sigmaZoom = function() {
+                var c = $scope.graph.cameras[0]
+                c.goTo({
+                    ratio: c.ratio / c.settings('zoomingRatio')
+                })
+            }
+
+            /* Unzoom on the graph */
+            $scope.sigmaUnzoom = function() {
+                var c = $scope.graph.cameras[0]
+                c.goTo({
+                    ratio: c.ratio * c.settings('zoomingRatio')
+                })
+            }
+
             $scope.init = function() {
                 // Load the graph
                 sigma.parsers.gexf(
