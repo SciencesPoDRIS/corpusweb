@@ -109,6 +109,9 @@
                             $scope.graph.graph.edges().forEach(function(e) {
                                 if (e.source == n.data.node.id || e.target == n.data.node.id) {
                                     e.color = n.data.node.color;
+                                    e.zindex = 1;
+                                } else {
+                                    e.zindex = 0;
                                 }
                             });
                             $scope.graph.refresh();
@@ -134,6 +137,7 @@
 
             /* Filter the results on the query term */
             $scope.filter = function() {
+                console.log('filter');
                 actorsTypes = new Array();
                 $.each(actorsTypesCollection, function(index, item) {
                     if (item.isSelected) {
@@ -206,13 +210,6 @@
             };
         }
     );
-
-    // Create the es service from the esFactory
-    app.service('es', function(esFactory) {
-        return esFactory({
-            host: 'localhost:9200'
-        });
-    });
 
     // Create factory to load the json corpora
     app.factory('loadCorpora', ['$http',

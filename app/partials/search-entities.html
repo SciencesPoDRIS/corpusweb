@@ -1,10 +1,18 @@
 <div>
     <div ng-class="['row', 'search']">
-        <div ng-class="['row', 'col-md-offset-3', 'col-md-6']">
+        <div ng-class="['row', 'col-md-offset-3', 'col-md-6', 'search-input']">
             <md-input-container md-no-float>
                 <span ng-class="['glyphicon', 'glyphicon-search', 'icon-flip-horizontal']" aria-hidden="true"></span>
                 <span><input ng-model="queryTerm" type="text" placeholder="What are you looking for ?" ng-change="filter();" ng-class="['full-width']"/></span>
             </md-input-container>
+        </div>
+        <div ng-class="['row', 'col-md-offset-3', 'col-md-6']">
+            <div ng-repeat="actorsType in actorsTypesCollection" ng-class="['checkbox-inline', 'col-md-3']">
+                <label>
+                    <input type="checkbox" ng-model="actorsType.isSelected" ng-change="filter();"/>
+                    <span>{{actorsType.name}}</span>
+                </label>
+            </div>
         </div>
     </div>
     <div class="row">

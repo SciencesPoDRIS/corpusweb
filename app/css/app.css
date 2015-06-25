@@ -286,16 +286,15 @@ img.fit {
 
 .search {
     padding-bottom: 15px;
-    text-align: center;
-}
-
-.search > div.row {
-    padding-bottom: 10px;
 }
 
 .search input.full-width {
     display: inline;
     width: 95%;
+}
+
+.search-input {
+    padding-bottom: 10px;
 }
 
 .search .glyphicon-search {
@@ -304,6 +303,7 @@ img.fit {
 
 .search md-input-container {
     display: inline;
+    text-align: center;
 }
 
 .search md-input-container.md-default-theme:not(.md-input-invalid) .md-input {
@@ -321,6 +321,33 @@ img.fit {
 
 .search input[type=checkbox] {
     margin-right: 5px;
+}
+
+/**/
+input[type="checkbox"] {
+    border: 1px solid #dbdbdb;
+    border-radius: 2px;
+    background-color: #ffffff;
+    color: #e6142d;
+}
+
+input[type="checkbox"] {
+    position: relative;
+    -webkit-appearance: none;
+    height: 1.25em;
+    width: 1.25em;
+    margin-bottom: -0.25em;
+    margin-right: 5px;
+    vertical-align: top;
+}
+
+input[type="checkbox"]:checked:before {
+    content: "\2713";
+    position: absolute;
+    font-size: 0.85em;
+    text-align: center;
+    width: 1.25em;
+    color: #ff5a5f
 }
 /* Webentities list */
 
@@ -380,13 +407,13 @@ md-grid-list md-grid-tile md-grid-tile-header {
 
 md-grid-tile {
     border: 1px solid #b6b6b6;
-    border-radius: 0 0 1.3em 1.3em;
+    border-radius: 0 0 .7em .7em;
     cursor: pointer;
 }
 
 md-grid-tile img,
 .tile-footer {
-    border-radius: 0 0 1.1em 1.1em;
+    border-radius: 0 0 .5em .5em;
 }
 
 .tile-footer {
@@ -453,4 +480,15 @@ md-grid-tile img,
 
 .modal-image {
     margin-bottom: 15px;
+}
+/* Overwrite Bootstrap */
+
+.checkbox-inline,
+.radio-inline {
+    padding: 0;
+}
+
+.checkbox-inline+.checkbox-inline,
+.radio-inline+.radio-inline {
+    margin-left: 0;
 }
