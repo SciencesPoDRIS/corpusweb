@@ -99,6 +99,7 @@
                         // Initialize the Sigma Filter API
                         filter = new sigma.plugins.filter(s);
                         $scope.graph = s;
+                        console.log(s);
                         // Open modal on click on a node of the graph
                         $scope.graph.bind('clickNode', function(e) {
                             $scope.viewEntity(e.data.node.attributes);
@@ -106,12 +107,13 @@
                         // On node hover, color all the connected edges in the node color
                         $scope.graph.bind('overNode', function(n) {
                             // Get the connected edges
-                            $scope.graph.graph.edges().forEach(function(e) {
+                            $scope.graph.graph.edges().forEach(function(e, i) {
                                 if (e.source == n.data.node.id || e.target == n.data.node.id) {
                                     e.color = n.data.node.color;
-                                    e.zindex = 1;
-                                } else {
-                                    e.zindex = 0;
+                                    // Remove edge from edges array
+                                    $scope.graph.graph.dropEdge(e.id);
+                                    // Add edge as last element of edges array (to render it at the top of other edges)
+                                    $scope.graph.graph.addEdge(e);
                                 }
                             });
                             $scope.graph.refresh();
@@ -137,7 +139,6 @@
 
             /* Filter the results on the query term */
             $scope.filter = function() {
-                console.log('filter');
                 actorsTypes = new Array();
                 $.each(actorsTypesCollection, function(index, item) {
                     if (item.isSelected) {
