@@ -1,5 +1,6 @@
 <div id="key" ng-class="['col-md-' + {{$parent.columnWidth}}]" ng-repeat="row in data">
     <div ng-class="['key-item', 'active']" ng-repeat="item in row">
-        <span ng-class="['key-color']" style="background-color: {{item.color}};">&nbsp;&nbsp;&nbsp;</span> {{item.name}}
+        <div ng-class="['key-color']" style="background-color: {{item.color}};"></div>
+        <span ng-class="['key-name']">{{item.name}}</span>
     </div>
 </div>

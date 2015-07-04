@@ -468,6 +468,25 @@ md-grid-tile img,
 .legend {
     margin: 0;
 }
+
+.legend .key-item {
+    height: 20px;
+    margin: 5px 0;
+}
+
+.legend .key-item .key-color {
+    border-radius: 10px;
+    display: inline-block;
+    height: 20px;
+    vertical-align: middle;
+    width: 20px;
+}
+
+.legend .key-item .key-name {
+    display: inline-block;
+    line-height: 20px;
+    vertical-align: middle;
+}
 /* Modal */
 
 .modal-image {
