@@ -99,7 +99,6 @@
                         // Initialize the Sigma Filter API
                         filter = new sigma.plugins.filter(s);
                         $scope.graph = s;
-                        console.log(s);
                         // Open modal on click on a node of the graph
                         $scope.graph.bind('clickNode', function(e) {
                             $scope.viewEntity(e.data.node.attributes);
