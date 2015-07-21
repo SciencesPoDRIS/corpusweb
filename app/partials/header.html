@@ -1,32 +1,40 @@
 <div id="header-inmedia_1">
-    <div id="logo-tools">
-        <div ng-class="['logo_scpo']">
+    <div id="logo-tools" ng-class="['row']">
+        <div ng-class="['logo_scpo', 'col-sm-8', 'col-md-2']">
             <a title="Sciences Po | Library - New window" href="http://www.sciencespo.fr/bibliotheque/en" target="_blank"> <img src="http://sciencespo.fr/bibliotheque/sites/sciencespo.fr.bibliotheque/files/logo_interfaces_bibliotheque.png" alt="Sciences Po | Library - New window"> </a>
         </div>
-        <div id="cata_ent">
-            <a title="Corpus web" href="#/"><h1 ng-class="['catalog_title']">Web Corpus</h1></a>
-            <ul id="menu_appli" class="a nav-images menu">
-                <li ng-class="['nav-item-0']">
-                    <a id="recherche-unifiee" ng-class="['ext']" title="One search - New window" href="http://sciencespo.summon.serialssolutions.com/en" target="_blank">One search</a>&nbsp;|
-                </li>
-                <li ng-class="['nav-item-1', 'ml']">
-                    <a id="eresources" href="http://www.sciencespo.fr/bibliotheque/en/search/eresources" target="_blank">Electronic resources</a>&nbsp;|
-                </li>
-                <li ng-class="['nav-item-2', 'ml']">
-                    <a id="revues-lignes" ng-class="['ext']" title="Online journals - New window" href="http://gl5sm8uv5q.search.serialssolutions.com/?paramdict=en-US" target="_blank">Online journals</a>&nbsp;|
-                </li>
-                <li ng-class="['nav-item-3', 'ml']">
-                    <a id="spire" ng-class="['ext']" title="Spire - New window" href="http://spire.sciencespo.fr/web/?lang=en" target="_blank">Spire</a>
-                </li>
-            </ul>
-            <div id="social">
-                <a title="Ask a librarian" href="http://www.sciencespo.fr/bibliotheque/en/services/ask-librarian" target="_blank"><img title="Ask a librarian" src="http://www.sciencespo.fr/bibliotheque/sites/sciencespo.fr.bibliotheque/files/images/ask-librarian.png" alt="Logo Ask a librarian" width="30" height="30"></a>&nbsp;
-                <a id="twitter" title="Join us on twitter - New window" href="https://twitter.com/ScPoBibli" target="_blank"><img title="Join us on twitter" src="http://www.sciencespo.fr/bibliotheque/sites/sciencespo.fr.bibliotheque/files/images/twitter_logo_blue.png" alt="Logo Twitter"></a>&nbsp;
-                <a id="facebook" title="Join us on facebook - New window" href="http://www.facebook.com/sciencespo.library" target="_blank"><img title="Join us on facebook" src="http://www.sciencespo.fr/bibliotheque/sites/sciencespo.fr.bibliotheque/files/images/f_logo.png" alt="Logo Facebook"></a>
+        <nav ng-class="['col-sm-4', 'col-md-8', 'navbar', 'navbar-default']">
+            <button type="button" ng-class="['navbar-toggle', 'collapsed']" data-toggle="collapse" data-target="#cata_ent" aria-expanded="false">
+                <span ng-class="['sr-only']">Toggle navigation</span>
+                <span ng-class="['icon-bar']"></span>
+                <span ng-class="['icon-bar']"></span>
+                <span ng-class="['icon-bar']"></span>
+            </button>
+            <div id="cata_ent" ng-class="['collapse', 'navbar-collapse']">
+                <a title="Corpus web" href="#/"><h1 ng-class="['catalog_title']">Web Corpus</h1></a>
+                <ul id="menu_appli" ng-class="['a', 'nav-images', 'menu', 'nav', 'navbar-nav']">
+                    <li ng-class="['nav-item-0']">
+                        <a id="recherche-unifiee" ng-class="['ext']" title="One search - New window" href="http://sciencespo.summon.serialssolutions.com/en" target="_blank">One search</a>
+                    </li>
+                    <li ng-class="['nav-item-1', 'ml']">
+                        <a id="eresources" href="http://www.sciencespo.fr/bibliotheque/en/search/eresources" target="_blank">Electronic resources</a>
+                    </li>
+                    <li ng-class="['nav-item-2', 'ml']">
+                        <a id="revues-lignes" ng-class="['ext']" title="Online journals - New window" href="http://gl5sm8uv5q.search.serialssolutions.com/?paramdict=en-US" target="_blank">Online journals</a>
+                    </li>
+                    <li ng-class="['nav-item-3', 'ml']">
+                        <a id="spire" ng-class="['ext']" title="Spire - New window" href="http://spire.sciencespo.fr/web/?lang=en" target="_blank">Spire</a>
+                    </li>
+                </ul>
+                <div id="social">
+                    <a title="Ask a librarian" href="http://www.sciencespo.fr/bibliotheque/en/services/ask-librarian" target="_blank"><img title="Ask a librarian" src="http://www.sciencespo.fr/bibliotheque/sites/sciencespo.fr.bibliotheque/files/images/ask-librarian.png" alt="Logo Ask a librarian" width="30" height="30"></a>&nbsp;
+                    <a id="twitter" title="Join us on twitter - New window" href="https://twitter.com/ScPoBibli" target="_blank"><img title="Join us on twitter" src="http://www.sciencespo.fr/bibliotheque/sites/sciencespo.fr.bibliotheque/files/images/twitter_logo_blue.png" alt="Logo Twitter"></a>&nbsp;
+                    <a id="facebook" title="Join us on facebook - New window" href="http://www.facebook.com/sciencespo.library" target="_blank"><img title="Join us on facebook" src="http://www.sciencespo.fr/bibliotheque/sites/sciencespo.fr.bibliotheque/files/images/f_logo.png" alt="Logo Facebook"></a>
+                </div>
             </div>
-        </div>
-        <div ng-class="['desc-appli']">
-            <iframe id="iframe_horaire" title="Schedule" src="http://www.sciencespo.fr/bibliotheque/en/search/inmedia" scrolling="no" width="320" height="240"></iframe>
+        </nav>
+        <div ng-class="['desc-appli', 'col-sm-12', 'col-md-2']">
+            <iframe id="iframe_horaire" title="Schedule" src="http://www.sciencespo.fr/bibliotheque/en/search/inmedia" scrolling="no" width="250" height="240"></iframe>
         </div>
     </div>
 </div>
