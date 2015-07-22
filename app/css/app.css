@@ -47,8 +47,9 @@ a:visited {
 }
 
 .menu > li:nth-child(1):before {
-    content: "";
-    padding: 0;
+    /*content: "";*/
+    /*padding: 0;*/
+    display: none;
 }
 
 .icon-flip-horizontal {
@@ -109,16 +110,22 @@ a:visited {
 
 @media (max-width: 767px) {
     #header-inmedia_1 {
-        height: 140px;
+        height: auto;
     }
 }
 
 #logo-tools {
     border-bottom: 3px solid #e6142d;
-    height: 95%;
+    height: 99%;
     margin: 0;
     position: absolute;
     width: 100%;
+}
+
+@media (max-width: 767px) {
+    #logo-tools {
+        position: initial;
+    }
 }
 
 #logo-tools a {
@@ -195,7 +202,8 @@ ul#menu_appli li:last-child a::after {
 
 @media (max-width: 767px) {
     .navbar {
-        margin-bottom: 5px;
+        margin: 0 10px;
+        padding: 0;
         position: initial;
     }
 }
@@ -257,8 +265,7 @@ ul#menu_appli li:last-child a::after {
 }
 
 .desc-appli {
-    background-color: #fafafa;
-    height: 1px;
+    height: 68px;
     position: fixed;
     right: 15px;
     top: -5px;
@@ -275,7 +282,6 @@ ul#menu_appli li:last-child a::after {
 
 #iframe_horaire {
     border: none;
-    height: 68px;
 }
 
 .horaire_bloc {
