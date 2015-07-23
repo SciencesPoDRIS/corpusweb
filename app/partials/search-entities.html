@@ -6,15 +6,18 @@
                 <span><input ng-model="queryTerm" type="text" placeholder="What are you looking for ?" ng-change="filter();" ng-class="['full-width']"/></span>
             </md-input-container>
         </div>
-        <div ng-class="['row', 'col-md-12']">
-            <div ng-class="['col-md-3']">Actors' type</div>
-            <div ng-class="['col-md-6']">
-                <div ng-repeat="actorsType in actorsTypesCollection" ng-class="['checkbox-inline', 'col-md-3']">
-                    <label>
-                        <input id="{{actorsType.id}}" type="checkbox" name="actorsType" ng-model="actorsType.isSelected" ng-change="filter('actorsType', actorsType.id);" />
-                        <span>{{actorsType.name | limitTo : 15}}</span>
-                    </label>
+        <div ng-repeat="category in categories" ng-class="['advanced-search']">
+            <div ng-class="['row', 'col-md-12']">
+                <div ng-class="['col-md-3']">{{category.name}}</div>
+                <div ng-class="['col-md-6']">
+                    <div ng-repeat="value in category.values" ng-class="['checkbox-inline', 'col-md-3']">
+                        <label>
+                            <input id="{{value.id}}" type="checkbox" name="{{category.id}}" ng-model="value.isSelected" ng-change="filter(category.id, value.id);" />
+                            <span>{{value.name | limitTo : 15}}</span>
+                        </label>
+                    </div>
                 </div>
+                <hr ng-class="['clearfix']"/>
             </div>
         </div>
     </div>
@@ -50,7 +53,7 @@
                 </div>
             </div>
             <div ng-class="['row', 'legend']">
-                <legend source="actorsTypesCollection" columns-number="2" />
+                <legend columns-number="2" />
             </div>
         </div>
     </div>

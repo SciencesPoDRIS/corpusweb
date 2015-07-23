@@ -45,13 +45,20 @@
         }
     ]);
 
-    app.controller('QueryController', ['actorsTypesCollection', '$scope', '$http', '$modal',
-        function(actorsTypesCollection, $scope, $http, $modal) {
+    app.controller('QueryController', ['categories', '$scope', '$http', '$modal',
+        function(categories, $scope, $http, $modal) {
             $scope.queryTerm = '';
             $scope.totalItems = 0;
             $scope.currentPage = 1;
             $scope.numPerPage = 12;
-            $scope.actorsTypesCollection = actorsTypesCollection;
+
+            // Load all categories to display
+            $scope.categories = new Array();
+            $.each(categories, function(index, item) {
+                if(item.isDiplayed !== undefined && item.isDiplayed) {
+                    $scope.categories.push(item);
+                }
+            });
             var actorsTypes = new Array();
             var ids = new Array();
             var begin = 0;
@@ -137,16 +144,21 @@
             }
 
             /* Filter the results on the query term */
-            $scope.filter = function(name, obj) {
+            $scope.filter = function(id, obj) {
+                // Add specific interaction for the "All" checkbox
                 if (obj == 'all') {
-                    $.each(actorsTypesCollection, function(index, item) {
-                        item.isSelected = $('input#' + obj + '[name="' + name + '"]').prop('checked');
+                    $.each(categories[id].values, function(index, item) {
+                        item.isSelected = $('input#' + obj + '[name="' + id + '"]').prop('checked');
                     });
                 }
                 actorsTypes = new Array();
-                $.each(actorsTypesCollection, function(index, item) {
-                    if (item.isSelected) {
-                        actorsTypes.push(item.id);
+                $.each(categories, function(index, item) {
+                    if (item.values !== undefined) {
+                        $.each(item.values, function(index, item) {
+                            if (item.isSelected) {
+                                actorsTypes.push(item.id);
+                            }
+                        });
                     }
                 });
                 ids = new Array();
@@ -181,7 +193,7 @@
                 // Color only selected nodes
                 $scope.graph.graph.nodes().forEach(function(node) {
                     if (ids.indexOf(node.id) != -1) {
-                        node.color = actorsTypesCollection.filter(function(item) {
+                        node.color = categories[categories.nodesColor].values.filter(function(item) {
                             return item.id == node.attributes["type d'acteur"]
                         })[0].color;
                     }
@@ -240,14 +252,13 @@
         return {
             restrict: 'E',
             scope: {
-                source: '=',
                 columnsNumber: '=columnsNumber'
             },
-            controller: function($scope) {
-                var elementsByColumn = Math.ceil($scope.source.length / $scope.columnsNumber);
+            controller: function($scope, categories) {
+                var elementsByColumn = Math.ceil(categories[categories.nodesColor].values.length / $scope.columnsNumber);
                 $scope.data = new Array($scope.columnsNumber);
                 for (var i = 0; i < $scope.columnsNumber; i++) {
-                    $scope.data[i] = $scope.source.slice(i * elementsByColumn, (i + 1) * elementsByColumn);
+                    $scope.data[i] = categories[categories.nodesColor].values.slice(i * elementsByColumn, (i + 1) * elementsByColumn);
                 }
                 $scope.columnWidth = 12 / $scope.columnsNumber;
             },
