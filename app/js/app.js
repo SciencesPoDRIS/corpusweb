@@ -137,7 +137,12 @@
             }
 
             /* Filter the results on the query term */
-            $scope.filter = function() {
+            $scope.filter = function(name, obj) {
+                if (obj == 'all') {
+                    $.each(actorsTypesCollection, function(index, item) {
+                        item.isSelected = $('input#' + obj + '[name="' + name + '"]').prop('checked');
+                    });
+                }
                 actorsTypes = new Array();
                 $.each(actorsTypesCollection, function(index, item) {
                     if (item.isSelected) {
