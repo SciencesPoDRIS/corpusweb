@@ -431,6 +431,23 @@ img.fit {
     }
 }
 
+.search.searchfix {
+    background-color: #f6f4f3;
+    left: 0;
+    padding-left: 58px;
+    position: fixed;
+    top: 68px;
+    width: 100%;
+    z-index: 1000;
+}
+
+@media (max-width: 767px) {
+    .search.searchfix {
+        padding-left: 5px;
+        top: 126px;
+    }
+}
+
 .search input.full-width {
     display: inline;
     width: 95%;
@@ -442,6 +459,13 @@ img.fit {
 
 .search .glyphicon-search {
     color: #343333;
+}
+
+@media (max-width: 767px) {
+    .search .glyphicon-search {
+        float: left;
+        padding-top: 8px;
+    }
 }
 
 .search md-input-container {

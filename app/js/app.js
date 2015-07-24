@@ -172,16 +172,16 @@
                         $.each(categories[id].values, function(index, item) {
                             item.isSelected = $('input#' + obj + '[name="' + id + '"]').prop('checked');
                         });
-                    // If another checkbox is checked
+                        // If another checkbox is checked
                     } else {
                         // If another checkbox is checked and if all the checkboxes but the 'all' one are checked, check the 'all' one
-                        if($('input#' + obj + '[name="' + id + '"]').prop('checked')) {
+                        if ($('input#' + obj + '[name="' + id + '"]').prop('checked')) {
                             if ($('input[name="' + id + '"]:checked:not("#all")').length == categories[id].values.length - 1) {
                                 categories[id].values.filter(function(item) {
                                     return item.id == 'all';
                                 })[0].isSelected = true;
                             }
-                        // If another checkbox is unchecked, uncheck the 'all' checkbox
+                            // If another checkbox is unchecked, uncheck the 'all' checkbox
                         } else {
                             categories[id].values.filter(function(item) {
                                 return item.id == 'all';
@@ -261,6 +261,15 @@
             }
 
             $scope.init();
+
+            // Add effect on scroll to fix the search bar
+            $(document).scroll(function() {
+                if(!$('.search').hasClass('searchfix') && $(document).scrollTop() > $('.corpus-snippet').height()) {
+                    $('.search').addClass('searchfix');
+                } else if($('.search').hasClass('searchfix') && $(document).scrollTop() == 0) {
+                    $('.search').removeClass('searchfix');
+                }
+            });
         }
     ]);
 
