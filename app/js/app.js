@@ -47,6 +47,15 @@
 
     app.controller('QueryController', ['categories', '$scope', '$http', '$modal',
         function(categories, $scope, $http, $modal) {
+            // Init variables
+            var ids = new Array();
+            var begin = 0;
+            var end = 0;
+            var filter;
+            var searchCriteria;
+            var result;
+
+            // Init scope variables
             $scope.queryTerm = '';
             $scope.totalItems = 0;
             $scope.currentPage = 1;
@@ -55,17 +64,10 @@
             // Load all categories to display
             $scope.categories = new Array();
             $.each(categories, function(index, item) {
-                if(item.isDiplayed !== undefined && item.isDiplayed) {
+                if (item.isDiplayed !== undefined && item.isDiplayed) {
                     $scope.categories.push(item);
                 }
             });
-            // Init variables
-            var ids = new Array();
-            var begin = 0;
-            var end = 0;
-            var filter;
-            var searchCriteria;
-            var result;
 
             // Center the whole graph
             $scope.sigmaCenter = function() {
@@ -146,9 +148,10 @@
             }
 
             /* *
-             * Return true if the item match the search criteria, else return false
+             * Return true if the node matches the search criteria, else return false
+             * @var node 
              * @var searchCriteria JSONobject
-             * @var item
+             * 
              * @return boolean
              * */
             var isSearchedAmongCriteria = function(searchCriteria, node) {
@@ -161,11 +164,30 @@
 
             // Filter the results on the search criteria
             $scope.filter = function(id, obj) {
-                // Add specific interaction for the "All" checkbox
-                if (obj == 'all') {
-                    $.each(categories[id].values, function(index, item) {
-                        item.isSelected = $('input#' + obj + '[name="' + id + '"]').prop('checked');
-                    });
+                // If initial load, do nothing
+                if (id !== undefined) {
+                    // If the 'all' checkbox is checked, check all the checkboxes of the group
+                    // If the 'all' checkbox is unchecked, unchek all the checkboxes of the group
+                    if (obj == 'all') {
+                        $.each(categories[id].values, function(index, item) {
+                            item.isSelected = $('input#' + obj + '[name="' + id + '"]').prop('checked');
+                        });
+                    // If another checkbox is checked
+                    } else {
+                        // If another checkbox is checked and if all the checkboxes but the 'all' one are checked, check the 'all' one
+                        if($('input#' + obj + '[name="' + id + '"]').prop('checked')) {
+                            if ($('input[name="' + id + '"]:checked:not("#all")').length == categories[id].values.length - 1) {
+                                categories[id].values.filter(function(item) {
+                                    return item.id == 'all';
+                                })[0].isSelected = true;
+                            }
+                        // If another checkbox is unchecked, uncheck the 'all' checkbox
+                        } else {
+                            categories[id].values.filter(function(item) {
+                                return item.id == 'all';
+                            })[0].isSelected = false;
+                        }
+                    }
                 }
                 // Create JSON object to encapsulate the search criteria
                 searchCriteria = {};
@@ -184,18 +206,17 @@
                 $scope.filteredResults = $scope.allResults.filter(function(item) {
                     if ((
                             // Check if the searched term is present into the name of the site or into the actors' type of the site
-                            (item.NOM.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0)
-                            || (item["type d'acteur"].toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0))
-                            // Check if the actors' type is present into the actors' type searched
-                            && isSearchedAmongCriteria(searchCriteria, item)
-                        ) {
+                            (item.NOM.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0) || (item["type d'acteur"].toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0))
+                        // Check if the actors' type is present into the actors' type searched
+                        && isSearchedAmongCriteria(searchCriteria, item)
+                    ) {
                         ids.push(item.ID);
                         return true;
                     } else {
                         return false;
                     }
                 });
-                /* Filter nodes displayed on the graph */
+                // Filter nodes displayed on the graph
                 filter.nodesBy(function(n) {
                     return ids.indexOf(n.id);
                 }).apply();
@@ -203,7 +224,7 @@
                 $scope.display();
             }
 
-            /* Filter the results to display the current page according to pagination */
+            // Filter the results to display the current page according to pagination
             $scope.display = function() {
                 begin = ($scope.currentPage - 1) * 10;
                 end = begin + $scope.numPerPage;
