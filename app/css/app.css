@@ -676,3 +676,12 @@ md-grid-tile img,
 .clearfix {
     clear: both;
 }
+
+
+/* Overwrite Angular Material */
+
+@media (max-width: 767px) {
+    md-grid-list {
+        padding-bottom: calc(((75% - 0px) * 12) - 80px) !important;
+    }
+}
