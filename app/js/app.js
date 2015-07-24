@@ -59,13 +59,15 @@
                     $scope.categories.push(item);
                 }
             });
-            var actorsTypes = new Array();
+            // Init variables
             var ids = new Array();
             var begin = 0;
             var end = 0;
             var filter;
+            var searchCriteria;
+            var result;
 
-            /* Center the whole graph */
+            // Center the whole graph
             $scope.sigmaCenter = function() {
                 var c = $scope.graph.cameras[0]
                 c.goTo({
@@ -75,7 +77,7 @@
                 })
             }
 
-            /* Zoom on the graph */
+            // Zoom on the graph
             $scope.sigmaZoom = function() {
                 var c = $scope.graph.cameras[0]
                 c.goTo({
@@ -83,7 +85,7 @@
                 })
             }
 
-            /* Unzoom on the graph */
+            // Unzoom on the graph
             $scope.sigmaUnzoom = function() {
                 var c = $scope.graph.cameras[0]
                 c.goTo({
@@ -143,7 +145,21 @@
                 );
             }
 
-            /* Filter the results on the query term */
+            /* *
+             * Return true if the item match the search criteria, else return false
+             * @var searchCriteria JSONobject
+             * @var item
+             * @return boolean
+             * */
+            var isSearchedAmongCriteria = function(searchCriteria, node) {
+                result = true;
+                $.each(searchCriteria, function(index, item) {
+                    result = result && (item.indexOf(node[categories[index].mappedField]) >= 0);
+                });
+                return result;
+            }
+
+            // Filter the results on the search criteria
             $scope.filter = function(id, obj) {
                 // Add specific interaction for the "All" checkbox
                 if (obj == 'all') {
@@ -151,12 +167,14 @@
                         item.isSelected = $('input#' + obj + '[name="' + id + '"]').prop('checked');
                     });
                 }
-                actorsTypes = new Array();
-                $.each(categories, function(index, item) {
-                    if (item.values !== undefined) {
-                        $.each(item.values, function(index, item) {
-                            if (item.isSelected) {
-                                actorsTypes.push(item.id);
+                // Create JSON object to encapsulate the search criteria
+                searchCriteria = {};
+                $.each(categories, function(index_01, item_01) {
+                    if (item_01.values !== undefined) {
+                        searchCriteria[index_01] = [];
+                        $.each(item_01.values, function(index_02, item_02) {
+                            if (item_02.isSelected) {
+                                searchCriteria[index_01].push(item_02.id);
                             }
                         });
                     }
@@ -164,7 +182,13 @@
                 ids = new Array();
                 $scope.currentPage = 1;
                 $scope.filteredResults = $scope.allResults.filter(function(item) {
-                    if (((item.NOM.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0) || (item["type d'acteur"].toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0)) && (actorsTypes.indexOf(item["type d'acteur"]) >= 0)) {
+                    if ((
+                            // Check if the searched term is present into the name of the site or into the actors' type of the site
+                            (item.NOM.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0)
+                            || (item["type d'acteur"].toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0))
+                            // Check if the actors' type is present into the actors' type searched
+                            && isSearchedAmongCriteria(searchCriteria, item)
+                        ) {
                         ids.push(item.ID);
                         return true;
                     } else {
@@ -190,11 +214,11 @@
                     // Change default label by the value of the column "NOM"
                     node.label = node.attributes.NOM;
                 });
-                // Color only selected nodes
+                // Color only selected nodes, according to the configuration file
                 $scope.graph.graph.nodes().forEach(function(node) {
                     if (ids.indexOf(node.id) != -1) {
                         node.color = categories[categories.nodesColor].values.filter(function(item) {
-                            return item.id == node.attributes["type d'acteur"]
+                            return item.id == node.attributes[categories[categories.nodesColor].mappedField];
                         })[0].color;
                     }
                 });
