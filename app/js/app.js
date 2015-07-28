@@ -58,6 +58,7 @@
             var filter;
             var searchCriteria;
             var result;
+            var tmp;
 
             // Init scope variables
             $scope.queryTerm = '';
@@ -143,8 +144,32 @@
                             $('#' + n.data.node.id + ' img').removeClass('hover');
                         });
                         // Load all results
-                        $http.get('../data/COP21.csv').success(function(data) {
-                            $scope.allResults = $.csv.toObjects(data).slice(1);
+                        $http.get('../data/COP21.tsv').success(function(data) {
+                            $scope.allResults = [];
+                            $.each(data.split('\n').slice(1), function(index, item) {
+                                item = item.split('\t');
+                                tmp = {};
+                                tmp['ID'] = item[0];
+                                tmp['NAME'] = item[1];
+                                tmp['PREFIXES'] = item[2];
+                                tmp['URL'] = item[3];
+                                tmp['STATUS'] = item[4];
+                                tmp['INDEGREE'] = item[5];
+                                tmp['FULL_NAME'] = item[6];
+                                tmp['ACTORS_TYPE'] = item[7];
+                                tmp['COUNTRY'] = item[8];
+                                tmp['AREA'] = item[9];
+                                tmp['ANTHROPOGENIC_CLIMATE_CHANGE'] = item[10];
+                                tmp['MITIGATION_ADAPTATION'] = item[11];
+                                tmp['INDUSTRIAL_DELEGATION'] = item[12];
+                                tmp['THEMATIC_DELEGATION'] = item[13];
+                                tmp['LANGUAGE'] = item[14];
+                                tmp['COLLECTION'] = item[15];
+                                tmp['ABSTRACT_DRAFT'] = item[16];
+                                tmp['ABSTRACT'] = item[17];
+                                tmp['COMMENT'] = item[18];
+                                $scope.allResults.push(tmp);
+                            });
                             $scope.filter();
                         });
                     }
@@ -210,7 +235,10 @@
                 $scope.filteredResults = $scope.allResults.filter(function(item) {
                     if ((
                             // Check if the searched term is present into the name of the site or into the actors' type of the site
-                            (item.NOM.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0) || (item["type d'acteur"].toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0))
+                            (item.FULL_NAME.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0)
+                            || (item.INDUSTRIAL_DELEGATION.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0)
+                            || (item.THEMATIC_DELEGATION.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0)
+                            || (item.ABSTRACT.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0))
                         // Check if the actors' type is present into the actors' type searched
                         && isSearchedAmongCriteria(searchCriteria, item)
                     ) {
@@ -236,8 +264,8 @@
                 $scope.graph.graph.nodes().forEach(function(node) {
                     // Reset all nodes' color to the light grey
                     node.color = '#d3d3d3';
-                    // Change default label by the value of the column "NOM"
-                    node.label = node.attributes.NOM;
+                    // Change default label by the value of the column "FULL_NAME"
+                    node.label = node.attributes.FULL_NAME;
                 });
                 // Color only selected nodes, according to the configuration file
                 $scope.graph.graph.nodes().forEach(function(node) {
