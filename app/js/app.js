@@ -19,6 +19,10 @@
                 templateUrl: 'partials/description.html',
                 controller: 'CorpusCtrl'
             }).
+            when('/WebEntity/:webEntityId', {
+                templateUrl: 'partials/web-entity.html',
+                controller: 'WebEntityCtrl'
+            }).
             otherwise({
                 redirectTo: '/'
             });
@@ -264,23 +268,37 @@
 
             // Add effect on scroll to fix the search bar
             $(document).scroll(function() {
-                if(!$('.search').hasClass('searchfix') && $(document).scrollTop() > $('.corpus-snippet').height()) {
+                if (!$('.search').hasClass('searchfix') && $(document).scrollTop() > $('.corpus-snippet').height()) {
                     $('.search').addClass('searchfix');
-                } else if($('.search').hasClass('searchfix') && $(document).scrollTop() == 0) {
+                } else if ($('.search').hasClass('searchfix') && $(document).scrollTop() == 0) {
                     $('.search').removeClass('searchfix');
                 }
             });
         }
     ]);
 
-    app.controller('ModalInstanceCtrl',
+    app.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'item',
         function($scope, $modalInstance, item) {
             $scope.item = item;
             $scope.close = function() {
                 $modalInstance.close();
             };
         }
-    );
+    ]);
+
+    app.controller('WebEntityCtrl', ['$scope', '$routeParams', '$http',
+        function($scope, $routeParams, $http) {
+            // Load corpus
+            $http.get('../data/COP21.csv').success(function(data) {
+                var webEntities = $.csv.toObjects(data).slice(1);
+                for (var i = 0; i < webEntities.length; i++) {
+                    if (webEntities[i].ID == $routeParams.webEntityId) {
+                        $scope.webEntity = webEntities[i];
+                    }
+                }
+            });
+        }
+    ]);
 
     // Create factory to load the json corpora
     app.factory('loadCorpora', ['$http',

@@ -1,0 +1,15 @@
+<div id="{{webEntity.ID}}" ng-class=['webEntity']>
+    <h3>{{webEntity.NOM}}</h3>
+</div>
+<div>
+    <div>
+        <img src="https://api.pagelr.com/capture?uri={{webEntity.URL}}&width=400&height=300"></img>
+    </div>
+    <div>
+        <a title="{{webEntity.NAME}} | New window" href="{{webEntity.URL}}" target="_blank">{{webEntity.URL}}</a>
+    </div>
+    <div ng-class=['metadata']>
+        {{webEntity["type d'acteur"]}} <br />
+        {{webEntity["CRAWLING STATUS"]}}
+    </div>
+</div>
