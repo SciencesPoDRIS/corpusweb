@@ -707,6 +707,9 @@ md-grid-tile img,
     clear: both;
 }
 
+label {
+    font-weight: normal;
+}
 
 /* Overwrite Angular Material */
 
