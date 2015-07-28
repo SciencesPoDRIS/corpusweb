@@ -235,10 +235,7 @@
                 $scope.filteredResults = $scope.allResults.filter(function(item) {
                     if ((
                             // Check if the searched term is present into the name of the site or into the actors' type of the site
-                            (item.FULL_NAME.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0)
-                            || (item.INDUSTRIAL_DELEGATION.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0)
-                            || (item.THEMATIC_DELEGATION.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0)
-                            || (item.ABSTRACT.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0))
+                            (item.FULL_NAME.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0) || (item.INDUSTRIAL_DELEGATION.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0) || (item.THEMATIC_DELEGATION.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0) || (item.ABSTRACT.toLowerCase().indexOf($scope.queryTerm.toLowerCase()) >= 0))
                         // Check if the actors' type is present into the actors' type searched
                         && isSearchedAmongCriteria(searchCriteria, item)
                     ) {
@@ -325,6 +322,18 @@
                     }
                 }
             });
+        }
+    ]);
+
+    app.filter('translateActorsType', ['categories',
+        function(categories, input) {
+            return function(input) {
+                var index = 0;
+                while(categories.actorsTypesCollection.values[index].id != input) {
+                    index++;
+                }
+                return categories.actorsTypesCollection.values[index].name;
+            };
         }
     ]);
 

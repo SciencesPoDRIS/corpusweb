@@ -29,7 +29,7 @@
                     <md-grid-tile id="{{result.ID}}" ng-repeat="result in displayedResults" md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-class="['gray']" ng-click="viewEntity(result)">
                         <img ng-class="['fit', 'grayscale']" src="https://api.pagelr.com/capture?uri={{result.URL}}&width=400&height=300"></img>
                         <md-grid-tile-footer ng-class="['tile-footer']">
-                            <h3>{{result.FULL_NAME}}</h3> {{result.ACTORS_TYPE}}
+                            <h3>{{result.FULL_NAME}}</h3> {{result.ACTORS_TYPE | translateActorsType}}
                         </md-grid-tile-footer>
                     </md-grid-tile>
                 </md-grid-list>
