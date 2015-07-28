@@ -431,6 +431,12 @@ img.fit {
     }
 }
 
+.advanced-search:not(:last-child) > .row {
+    border-bottom: 1px solid #d3d3d3;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+}
+
 .search.searchfix {
     background-color: #f6f4f3;
     left: 0;
