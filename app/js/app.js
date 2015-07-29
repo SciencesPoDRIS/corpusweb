@@ -49,16 +49,16 @@
         }
     ]);
 
-    app.controller('QueryController', ['categories', '$scope', '$http', '$modal',
-        function(categories, $scope, $http, $modal) {
+    app.controller('QueryController', ['categories', '$scope', '$http',
+        function(categories, $scope, $http) {
             // Init variables
-            var ids = new Array();
-            var begin = 0;
-            var end = 0;
-            var filter;
-            var searchCriteria;
-            var result;
-            var tmp;
+            var ids = [],
+                begin = 0,
+                end = 0,
+                filter,
+                searchCriteria,
+                result,
+                tmp;
 
             // Init scope variables
             $scope.queryTerm = '';
@@ -67,7 +67,7 @@
             $scope.numPerPage = 12;
 
             // Load all categories to display
-            $scope.categories = new Array();
+            $scope.categories = [];
             $.each(categories, function(index, item) {
                 if (item.isDiplayed !== undefined && item.isDiplayed) {
                     $scope.categories.push(item);
@@ -117,7 +117,9 @@
                         $scope.graph = s;
                         // Open modal on click on a node of the graph
                         $scope.graph.bind('clickNode', function(e) {
-                            $scope.viewEntity(e.data.node.attributes);
+                            // console.log(e.data.node.id);
+                            window.location.href = '/app/#/WebEntity/' + e.data.node.id;
+                            // $scope.viewEntity(e.data.node.attributes);
                         });
                         // On node hover, color all the connected edges in the node color
                         $scope.graph.bind('overNode', function(n) {
@@ -143,6 +145,7 @@
                             $scope.graph.refresh();
                             $('#' + n.data.node.id + ' img').removeClass('hover');
                         });
+
                         // Load all results
                         $http.get('../data/COP21.tsv').success(function(data) {
                             $scope.allResults = [];
@@ -230,7 +233,7 @@
                         });
                     }
                 });
-                ids = new Array();
+                ids = [];
                 $scope.currentPage = 1;
                 $scope.filteredResults = $scope.allResults.filter(function(item) {
                     if ((
@@ -275,20 +278,6 @@
                 $scope.graph.refresh();
             }
 
-            $scope.viewEntity = function(item) {
-                var modalInstance = $modal.open({
-                    animation: true,
-                    templateUrl: 'entity',
-                    controller: 'ModalInstanceCtrl',
-                    size: 'lg',
-                    resolve: {
-                        item: function() {
-                            return item;
-                        }
-                    }
-                });
-            }
-
             $scope.init();
 
             // Add effect on scroll to fix the search bar
@@ -302,37 +291,138 @@
         }
     ]);
 
-    app.controller('ModalInstanceCtrl', ['$scope', '$modalInstance', 'item',
-        function($scope, $modalInstance, item) {
-            $scope.item = item;
-            $scope.close = function() {
-                $modalInstance.close();
-            };
-        }
-    ]);
+    app.controller('WebEntityCtrl', ['$scope', '$routeParams', '$http', 'categories',
+        function($scope, $routeParams, $http, categories) {
+            // Init variables
+            var filter;
 
-    app.controller('WebEntityCtrl', ['$scope', '$routeParams', '$http',
-        function($scope, $routeParams, $http) {
             // Load corpus
-            $http.get('../data/COP21.csv').success(function(data) {
-                var webEntities = $.csv.toObjects(data).slice(1);
-                for (var i = 0; i < webEntities.length; i++) {
-                    if (webEntities[i].ID == $routeParams.webEntityId) {
-                        $scope.webEntity = webEntities[i];
+            $http.get('../data/COP21.tsv').success(function(data) {
+                $.each(data.split('\n').slice(1), function(index, item) {
+                    item = item.split('\t');
+                    if (item[0] == $routeParams.webEntityId) {
+                        $scope.webEntity = {};
+                        $scope.webEntity.ID = item[0];
+                        $scope.webEntity.NAME = item[1];
+                        $scope.webEntity.PREFIXES = item[2];
+                        $scope.webEntity.URL = item[3];
+                        $scope.webEntity.STATUS = item[4];
+                        $scope.webEntity.INDEGREE = item[5];
+                        $scope.webEntity.FULL_NAME = item[6];
+                        $scope.webEntity.ACTORS_TYPE = item[7];
+                        $scope.webEntity.COUNTRY = item[8];
+                        $scope.webEntity.AREA = item[9];
+                        $scope.webEntity.ANTHROPOGENIC_CLIMATE_CHANGE = item[10];
+                        $scope.webEntity.MITIGATION_ADAPTATION = item[11];
+                        $scope.webEntity.INDUSTRIAL_DELEGATION = item[12];
+                        $scope.webEntity.THEMATIC_DELEGATION = item[13];
+                        $scope.webEntity.LANGUAGE = item[14];
+                        $scope.webEntity.COLLECTION = item[15];
+                        $scope.webEntity.ABSTRACT_DRAFT = item[16];
+                        $scope.webEntity.ABSTRACT = item[17];
+                        $scope.webEntity.COMMENT = item[18];
                     }
-                }
+                });
             });
+
+            // Center the whole graph
+            $scope.sigmaCenter = function() {
+                var c = $scope.graph.cameras[0]
+                c.goTo({
+                    ratio: 1,
+                    x: 0,
+                    y: 0
+                })
+            }
+
+            // Zoom on the graph
+            $scope.sigmaZoom = function() {
+                var c = $scope.graph.cameras[0]
+                c.goTo({
+                    ratio: c.ratio / c.settings('zoomingRatio')
+                })
+            }
+
+            // Unzoom on the graph
+            $scope.sigmaUnzoom = function() {
+                var c = $scope.graph.cameras[0]
+                c.goTo({
+                    ratio: c.ratio * c.settings('zoomingRatio')
+                })
+            }
+
+            // Add a method to the graph model that returns an
+            // object with every neighbors of a node inside:
+            sigma.classes.graph.addMethod('neighbors', function(nodeId) {
+                var k,
+                    neighbors = {},
+                    index = this.allNeighborsIndex[nodeId] || {};
+                for (k in index)
+                    neighbors[k] = this.nodesIndex[k];
+                return neighbors;
+            });
+
+            // Load the graph
+            sigma.parsers.gexf(
+                '../data/COP21.gexf', {
+                    container: 'graph',
+                    settings: {
+                        defaultEdgeColor: '#d3d3d3',
+                        edgeColor: 'default',
+                        labelThreshold: 100
+                    }
+                },
+                function(s) {
+                    // Initialize the Sigma Filter API
+                    filter = new sigma.plugins.filter(s);
+                    $scope.graph = s;
+                    // Color only selected nodes, according to the configuration file
+                    var node = $.grep($scope.graph.graph.nodes(), function(item, index) {
+                       return item.id == $routeParams.webEntityId;
+                    })[0];
+                    var color = $.grep(categories.actorsType.values, function(item, index) {
+                        return item.id == node.attributes.ACTORS_TYPE;
+                    })[0].color;
+                    var ids = [];
+                    ids.push($routeParams.webEntityId);
+                    $.each($scope.graph.graph.neighbors($routeParams.webEntityId), function(item, index) {
+                        ids.push(item);
+                    });
+                    $scope.graph.graph.nodes().forEach(function(node) {
+                        if((ids.indexOf(node.id) != -1) && (node.attributes[categories[categories.nodesColor].mappedField] !== undefined)) {
+                            node.color = categories[categories.nodesColor].values.filter(function(item) {
+                                return item.id == node.attributes[categories[categories.nodesColor].mappedField];
+                            })[0].color;
+                        }
+                    });
+                    // Color the connected edges
+                    $scope.graph.graph.edges().forEach(function(e, i) {
+                        if (e.source == $routeParams.webEntityId || e.target == $routeParams.webEntityId) {
+                            e.color = color;
+                            // Remove edge from edges array
+                            $scope.graph.graph.dropEdge(e.id);
+                            // Add edge as last element of edges array (to render it at the top of other edges)
+                            $scope.graph.graph.addEdge(e);
+                        }
+                    });
+                    $scope.graph.refresh();
+                }
+            );
         }
     ]);
 
-    app.filter('translateActorsType', ['categories',
+    app.filter('translate', ['categories',
         function(categories, input) {
-            return function(input) {
-                var index = 0;
-                while(categories.actorsTypesCollection.values[index].id != input) {
-                    index++;
+            return function(input, facet) {
+                if (input === undefined) {
+                    return '';
+                } else {
+                    var index = 0;
+                    while (categories[facet].values[index].id != input) {
+                        index++;
+                    }
+                    return categories[facet].values[index].name;
                 }
-                return categories.actorsTypesCollection.values[index].name;
             };
         }
     ]);

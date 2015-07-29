@@ -683,13 +683,6 @@ md-grid-tile img,
 }
 
 
-/* Modal */
-
-.modal-image {
-    margin-bottom: 15px;
-}
-
-
 /* Overwrite Bootstrap */
 
 .checkbox-inline,
@@ -717,4 +710,11 @@ label {
     md-grid-list {
         padding-bottom: calc(((75% - 0px) * 12) - 80px) !important;
     }
+}
+
+/* Table */
+
+table.metadata td.name {
+    text-align: right;
+    font-weight: bold;
 }
