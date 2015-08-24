@@ -13,7 +13,7 @@
                     <div ng-repeat="value in category.values" ng-class="['checkbox-inline', 'col-md-3']">
                         <label>
                             <input id="{{value.id}}" type="checkbox" name="{{category.id}}" ng-model="value.isSelected" ng-change="filter(category.id, value.id);" />
-                            <span>{{value.name | limitTo : 15}}</span>
+                            <span>{{value.name | limitTo : 15}} <i>({{value.count}})</i></span>
                         </label>
                     </div>
                 </div>

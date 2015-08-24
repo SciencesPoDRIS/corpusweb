@@ -115,7 +115,24 @@
                         // Initialize the Sigma Filter API
                         filter = new sigma.plugins.filter(s);
                         $scope.graph = s;
-                        // Open modal on click on a node of the graph
+                        // Count number of results by facets
+                        // Iterate over nodes from the graph
+                        $scope.graph.graph.nodes().forEach(function(node) {
+                            // Iterate over categories
+                            $.each(categories, function(item, value) {
+                                if (value.id) {
+                                    categories[value.id].values.filter(function(item) {
+                                        if (item.id == node.attributes[value.mappedField]) {
+                                            item.count++;
+                                            return true;
+                                        } else if (item.id == 'all') {
+                                            item.count = $scope.graph.graph.nodes().length;
+                                        }
+                                    });
+                                }
+                            })
+                        });
+                        // Open web entity page on click on a node of the graph
                         $scope.graph.bind('clickNode', function(e) {
                             window.location.href = '/app/#/WebEntity/' + e.data.node.id;
                         });
@@ -354,15 +371,17 @@
             }
 
             // Add a method to the graph model that returns an
-            // object with every neighbors of a node inside:
-            sigma.classes.graph.addMethod('neighbors', function(nodeId) {
-                var k,
-                    neighbors = {},
-                    index = this.allNeighborsIndex[nodeId] || {};
-                for (k in index)
-                    neighbors[k] = this.nodesIndex[k];
-                return neighbors;
-            });
+            // object with every neighbors of a node inside
+            if (!sigma.classes.graph.hasMethod('neighbors')) {
+                sigma.classes.graph.addMethod('neighbors', function(nodeId) {
+                    var k,
+                        neighbors = {},
+                        index = this.allNeighborsIndex[nodeId] || {};
+                    for (k in index)
+                        neighbors[k] = this.nodesIndex[k];
+                    return neighbors;
+                });
+            };
 
             // Load the graph
             sigma.parsers.gexf(
@@ -378,10 +397,9 @@
                     // Initialize the Sigma Filter API
                     filter = new sigma.plugins.filter(s);
                     $scope.graph = s;
-
                     // Color only selected nodes, according to the configuration file
                     var node = $.grep($scope.graph.graph.nodes(), function(item, index) {
-                       return item.id == $routeParams.webEntityId;
+                        return item.id == $routeParams.webEntityId;
                     })[0];
                     var color = $.grep(categories.actorsType.values, function(item, index) {
                         return item.id == node.attributes.ACTORS_TYPE;
@@ -392,7 +410,7 @@
                         ids.push(item);
                     });
                     $scope.graph.graph.nodes().forEach(function(node) {
-                        if((ids.indexOf(node.id) != -1) && (node.attributes[categories[categories.nodesColor].mappedField] !== undefined)) {
+                        if ((ids.indexOf(node.id) != -1) && (node.attributes[categories[categories.nodesColor].mappedField] !== undefined)) {
                             node.color = categories[categories.nodesColor].values.filter(function(item) {
                                 return item.id == node.attributes[categories[categories.nodesColor].mappedField];
                             })[0].color;
