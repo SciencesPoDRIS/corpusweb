@@ -117,9 +117,7 @@
                         $scope.graph = s;
                         // Open modal on click on a node of the graph
                         $scope.graph.bind('clickNode', function(e) {
-                            // console.log(e.data.node.id);
                             window.location.href = '/app/#/WebEntity/' + e.data.node.id;
-                            // $scope.viewEntity(e.data.node.attributes);
                         });
                         // On node hover, color all the connected edges in the node color
                         $scope.graph.bind('overNode', function(n) {
@@ -325,6 +323,10 @@
                 });
             });
 
+            $scope.backToCorpus = function() {
+                window.location.href = '/app/#/';
+            }
+
             // Center the whole graph
             $scope.sigmaCenter = function() {
                 var c = $scope.graph.cameras[0]
@@ -376,6 +378,7 @@
                     // Initialize the Sigma Filter API
                     filter = new sigma.plugins.filter(s);
                     $scope.graph = s;
+
                     // Color only selected nodes, according to the configuration file
                     var node = $.grep($scope.graph.graph.nodes(), function(item, index) {
                        return item.id == $routeParams.webEntityId;
