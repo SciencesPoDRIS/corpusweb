@@ -100,6 +100,21 @@
                 })
             }
 
+            // Hide or display the search filters
+            $scope.moreFilters = function() {
+                if ($scope.filtersCollapsed) {
+                    $('.category-value').removeClass('hide');
+                    $('.btn-more-filters').html('Less filters');
+                    $scope.filtersCollapsed = false;
+                } else {
+                    $('.category').each(function(index) {
+                        $(this).find('.category-value').slice(3).addClass('hide');
+                    });
+                    $('.btn-more-filters').html('More filters');
+                    $scope.filtersCollapsed = true;
+                }
+            }
+
             $scope.init = function() {
                 // Load the graph
                 sigma.parsers.gexf(
@@ -131,6 +146,11 @@
                                     });
                                 }
                             })
+                        });
+                        // Display only the first three facets items, hide the other ones
+                        $('.category').each(function(index) {
+                            $(this).find('.category-value').slice(3).addClass('hide');
+                            $scope.filtersCollapsed = true;
                         });
                         // Open web entity page on click on a node of the graph
                         $scope.graph.bind('clickNode', function(e) {

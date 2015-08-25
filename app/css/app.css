@@ -524,6 +524,17 @@ input[type="checkbox"]:checked:before {
 }
 
 
+/* Search footer */
+
+.search-footer {
+    padding-bottom: 10px;
+}
+
+.results-number {
+    font-style: italic;
+    margin-right: 15px;
+}
+
 /* Webentities list */
 
 .search .media img {
@@ -704,6 +715,7 @@ label {
     font-weight: normal;
 }
 
+
 /* Overwrite Angular Material */
 
 @media (max-width: 767px) {
@@ -711,6 +723,7 @@ label {
         padding-bottom: calc(((75% - 0px) * 12) - 80px) !important;
     }
 }
+
 
 /* Table */
 

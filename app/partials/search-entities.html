@@ -7,20 +7,31 @@
             </md-input-container>
         </div>
         <div ng-repeat="category in categories" ng-class="['advanced-search']">
-            <div ng-class="['row', 'col-md-12']">
+            <div ng-class="['row', 'col-md-12', 'category']">
                 <div ng-class="['col-md-3']">{{category.name}}</div>
                 <div ng-class="['col-md-6']">
-                    <div ng-repeat="value in category.values" ng-class="['checkbox-inline', 'col-md-3']">
+                    <div ng-repeat="value in category.values" ng-class="['checkbox-inline', 'col-md-3', 'category-value']">
                         <label>
                             <input id="{{value.id}}" type="checkbox" name="{{category.id}}" ng-model="value.isSelected" ng-change="filter(category.id, value.id);" />
-                            <span>{{value.name | limitTo : 15}} <i>({{value.count}})</i></span>
+                            <span>{{value.name | limitTo : 15}} <em>({{value.count}})</em></span>
                         </label>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <ng-pluralize count="totalItems" when="{'0': 'No result found', '1': '1 result found', 'other': '{} results found'}"></ng-pluralize>
+    <div ng-class="['row', 'search-footer']">
+        <ng-pluralize ng-class="['results-number']" count="totalItems" when="{'0': 'No result found', '1': '1 result found', 'other': '{} results found'}"></ng-pluralize>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default" aria-label="Left Align">
+                <span class="glyphicon glyphicon-th-large" aria-hidden="true" checked></span>
+            </button>
+            <button type="button" class="btn btn-default" aria-label="Left Align">
+                <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+            </button>
+        </div>
+        <button ng-class="['btn', 'btn-default', 'btn-more-filters', 'pull-right']" ng-click="moreFilters();">More filters</button>
+    </div>
     <div ng-class="['row']">
         <div ng-class="['col-md-6']">
             <div ng-class="['row', 'grid-list']" flex="">
@@ -41,13 +52,13 @@
             <div id="graph"></div>
             <div ng-class="['sigma-tools']">
                 <div ng-class="['btn-group-vertical']">
-                    <button type="button" ng-class="['btn', 'btn-link', 'btn-xs']" ng-click="sigmaCenter()" tooltip-placement="right" tooltip="Center">
+                    <button type="button" ng-class="['btn', 'btn-link', 'btn-xs']" ng-click="sigmaCenter();" tooltip-placement="right" tooltip="Center">
                         <span ng-class="['glyphicon', 'glyphicon-record']"></span>
                     </button>
-                    <button type="button" ng-class="['btn', 'btn-link', 'btn-xs']" ng-click="sigmaZoom()" tooltip-placement="right" tooltip="Zoom">
+                    <button type="button" ng-class="['btn', 'btn-link', 'btn-xs']" ng-click="sigmaZoom();" tooltip-placement="right" tooltip="Zoom">
                         <span ng-class="['glyphicon', 'glyphicon-plus']"></span>
                     </button>
-                    <button type="button" ng-class="['btn', 'btn-link', 'btn-xs']" ng-click="sigmaUnzoom()" tooltip-placement="right" tooltip="Unzoom">
+                    <button type="button" ng-class="['btn', 'btn-link', 'btn-xs']" ng-click="sigmaUnzoom();" tooltip-placement="right" tooltip="Unzoom">
                         <span ng-class="['glyphicon', 'glyphicon-minus']"></span>
                     </button>
                 </div>
