@@ -1,0 +1,12 @@
+<div ng-class="['row']">
+    <md-list ng-class="['entities-list']">
+        <md-list-item ng-repeat="result in displayedResults">
+            <img ng-class="['thirdfit', 'grayscale']" src="https://api.pagelr.com/capture?uri={{result.URL}}&width=200&height=150"></img>
+            <div>
+                <h3>{{result.FULL_NAME}}</h3>
+                {{result.ACTORS_TYPE | translate:'actorsType'}}
+            </div>
+        </md-list-item>
+        <md-divider ></md-divider>
+    </md-list>
+</div>

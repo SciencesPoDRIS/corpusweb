@@ -1,0 +1,13 @@
+<div ng-class="['row', 'grid-list']" flex="">
+    <md-grid-list md-cols-sm="1" md-cols-md="3" md-cols-gt-md="3" md-row-height-gt-md="4:3" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="10px">
+        <md-grid-tile id="{{result.ID}}" ng-repeat="result in displayedResults" md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-class="['gray']">
+            <a href="#/WebEntity/{{result.ID}}">
+                <img ng-class="['fit', 'grayscale']" src="https://api.pagelr.com/capture?uri={{result.URL}}&width=400&height=300"></img>
+                <md-grid-tile-footer ng-class="['tile-footer']">
+                    <h3>{{result.FULL_NAME}}</h3> {{result.ACTORS_TYPE | translate:'actorsType'}}
+                </md-grid-tile-footer>
+            </a>
+        </md-grid-tile>
+    </md-grid-list>
+    <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" ng-class="['pagination-sm']" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="display();"></pagination>
+</div>

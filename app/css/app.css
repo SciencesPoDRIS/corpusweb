@@ -418,6 +418,9 @@ img.fit {
     width: 100%;
 }
 
+img.thirdfit {
+    width: 33%;
+}
 
 /* Search */
 
@@ -618,6 +621,15 @@ md-grid-tile img,
 
 .tile-footer {
     padding: 0 10px;
+}
+
+.entities-list img {
+    padding: 10px 0;
+}
+
+.entities-list div {
+    padding: 0 10px;
+    width: 77%;
 }
 
 .grayscale {

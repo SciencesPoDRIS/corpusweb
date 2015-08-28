@@ -42,6 +42,7 @@
             $scope.totalItems = 0;
             $scope.currentPage = 1;
             $scope.numPerPage = 12;
+            
 
             // Load all categories to display
             $scope.categories = [];
@@ -50,6 +51,9 @@
                     $scope.categories.push(item);
                 }
             });
+
+            // Default entities view as grid
+            $scope.view = 'grid';
 
             // Center the whole graph
             $scope.sigmaCenter = function() {
