@@ -128,9 +128,9 @@
                                 }
                             })
                         });
-                        // Display only the first three facets items, hide the other ones
+                        // Display only the first four facets items, hide the other ones
                         $('.category').each(function(index) {
-                            $(this).find('.category-value').slice(3).addClass('hide');
+                            $(this).find('.category-value').slice(4).addClass('hide');
                             $scope.filtersCollapsed = true;
                         });
                         // Open web entity page on click on a node of the graph
