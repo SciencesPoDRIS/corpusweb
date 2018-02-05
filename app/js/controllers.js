@@ -89,7 +89,7 @@
                     $scope.filtersCollapsed = false;
                 } else {
                     $('.category').each(function(index) {
-                        $(this).find('.category-value').slice(3).addClass('hide');
+                        $(this).find('.category-value').slice(6).addClass('hide');
                     });
                     $('.btn-more-filters').html('More filters');
                     $scope.filtersCollapsed = true;
@@ -111,7 +111,6 @@
                         // Initialize the Sigma Filter API
                         filter = new sigma.plugins.filter(s);
                         $scope.graph = s;
-                        // Count number of results by facets
                         // Iterate over nodes from the graph
                         $scope.graph.graph.nodes().forEach(function(node) {
                             // Iterate over categories
@@ -128,11 +127,19 @@
                                 }
                             })
                         });
-                        // Display only the first four facets items, hide the other ones
-                        $('.category').each(function(index) {
-                            $(this).find('.category-value').slice(4).addClass('hide');
-                            $scope.filtersCollapsed = true;
+                        // Sort categories by descending count facet
+                        $.each(categories, function(item, value) {
+                            if(value.id) {
+                                value.values.sort(function(a, b) {
+                                    return ((a.count > b.count) ? -1 : 1);
+                                });
+                            }
                         });
+                        // Display only the first six facets items, hide the other ones
+                        // $('.category').each(function(index) {
+                        //     $(this).find('.category-value').slice(6).addClass('hide');
+                        //     $scope.filtersCollapsed = true;
+                        // });
                         // Open web entity page on click on a node of the graph
                         $scope.graph.bind('clickNode', function(e) {
                             window.location.href = '/app/#/WebEntity/' + e.data.node.id;
@@ -147,6 +154,14 @@
                                     $scope.graph.graph.dropEdge(e.id);
                                     // Add edge as last element of edges array (to render it at the top of other edges)
                                     $scope.graph.graph.addEdge(e);
+                                }
+                            });
+                            // Set an alpha to the default colored nodes, to let see the edges
+                            $scope.graph.graph.nodes().forEach(function(n, i) {
+                                if(n.color == '#d3d3d3') {
+                                    // n.opacity = 0.5;
+                                    n.color = "rgba(211, 211, 211, 0.1)";
+                                    console.log(n);
                                 }
                             });
                             $scope.graph.refresh();
@@ -299,9 +314,11 @@
             // Add effect on scroll to fix the search bar
             $(document).scroll(function() {
                 if (!$('.search').hasClass('searchfix') && $(document).scrollTop() > $('.corpus-snippet').height()) {
+                    console.log('Add search fix');
                     $('.search').addClass('searchfix');
                 } else if ($('.search').hasClass('searchfix') && $(document).scrollTop() == 0) {
                     $('.search').removeClass('searchfix');
+                    console.log('remove search fix');
                 }
             });
         }
@@ -430,6 +447,12 @@
                     $scope.graph.refresh();
                 }
             );
+        }
+    ]);
+
+    app.controller('TemplatingCtrl', ['$scope', 
+        function($scope) {
+            console.log('templating controller works');
         }
     ]);
 

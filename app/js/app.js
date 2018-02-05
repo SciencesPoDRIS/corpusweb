@@ -27,6 +27,10 @@
                 templateUrl: 'partials/web-entity.html',
                 controller: 'WebEntityCtrl'
             }).
+            when('/templating/', {
+                templateUrl: 'partials/templating.html',
+                controller: 'TemplatingCtrl'
+            }).
             otherwise({
                 redirectTo: '/'
             });

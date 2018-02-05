@@ -111,7 +111,6 @@ a:visited {
 @media (max-width: 767px) {
     #header-inmedia_1 {
         height: auto;
-        /*height: 126px;*/
         padding-bottom: 5px;
     }
 }
@@ -450,6 +449,10 @@ img.thirdfit {
     z-index: 1000;
 }
 
+.search.searchfix + .search-footer {
+    padding-top: 300px;
+}
+
 @media (max-width: 767px) {
     .search.searchfix {
         padding-left: 5px;
@@ -462,7 +465,7 @@ img.thirdfit {
     width: 95%;
 }
 
-.search-input {
+.search-bar {
     padding-bottom: 10px;
 }
 
@@ -495,6 +498,21 @@ img.thirdfit {
     text-align: left;
 }
 
+.search .category-name {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 75pxx;
+    white-space: nowrap;
+}
+
+.search .category-count {
+    display: inline-block;
+    float: right;
+    padding-right: 25px;
+    vertical-align: top;
+}
+
 
 /* Checkboxes */
 
@@ -505,7 +523,7 @@ img.thirdfit {
     border-radius: 2px;
     color: #e6142d;
     height: 1.25em;
-    margin: 0 5px -0.25px -21px;
+    margin: 2px 0 -0.25px -21px;
     position: relative;
     vertical-align: top;
     width: 1.25em;
@@ -524,6 +542,18 @@ input[type="checkbox"]:checked:before {
     position: absolute;
     text-align: center;
     width: 1.25em;
+}
+
+.search .key-color {
+    border-radius: 10px;
+    display: inline-block;
+    height: 20px;
+    vertical-align: top;
+    width: 20px;
+}
+
+.category-value > label {
+    width: 100%;
 }
 
 
@@ -605,22 +635,37 @@ input[type="checkbox"]:checked:before {
 md-grid-list md-grid-tile md-grid-tile-footer,
 md-grid-list md-grid-tile md-grid-tile-header {
     background-color: rgba(0, 0, 0, 0.7);
+    bottom: -2px;
     text-align: initial;
 }
 
 md-grid-tile {
-    border: 1px solid #b6b6b6;
-    border-radius: 0 0 .7em .7em;
+    /*border: 1px solid #b6b6b6;*/
     cursor: pointer;
 }
 
-md-grid-tile img,
-.tile-footer {
-    border-radius: 0 0 .5em .5em;
+md-grid-tile a {
+    border: 1px solid #b6b6b6;
 }
 
 .tile-footer {
     padding: 0 10px;
+}
+
+.tile-footer figcaption {
+    width: 100%;
+}
+
+.tile-footer .actors-type {
+    margin-bottom: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.entities-list {
+    height: 200px;
+    overflow: auto;
 }
 
 .entities-list img {

@@ -9,11 +9,13 @@
         <div ng-repeat="category in categories" ng-class="['advanced-search']">
             <div ng-class="['row', 'col-md-12', 'category']">
                 <div ng-class="['col-md-3']">{{category.name}}</div>
-                <div ng-class="['col-md-6']">
-                    <div ng-repeat="value in category.values" ng-class="['checkbox-inline', 'col-md-3', 'category-value']">
+                <div ng-class="['col-md-9']">
+                    <div ng-repeat="value in category.values" ng-class="['checkbox-inline', 'col-md-2', 'category-value']">
                         <label>
                             <input id="{{value.id}}" type="checkbox" name="{{category.id}}" ng-model="value.isSelected" ng-change="filter(category.id, value.id);" />
-                            <span>{{value.name | limitTo : 15}} <em>({{value.count}})</em></span>
+                            <div ng-class="['key-color']" style="background-color: {{value.color}};"></div>
+                            <span ng-class="['category-name']">{{value.name}} </span>
+                            <span ng-class="['category-count']"><em>({{value.count}})</em></span>
                         </label>
                     </div>
                 </div>
@@ -34,17 +36,6 @@
     </div>
     <div ng-class="['row']">
         <div ng-class="['col-md-6']">
-            <div ng-switch on="view">
-                <div ng-switch-when="grid">
-                    <div ng-include="'partials/entities-grid.html'"></div>
-                </div>
-                <div ng-switch-when="list">
-                    <div ng-include="'partials/entities-list.html'"></div>
-                </div>
-                <div ng-switch-default></div>
-            </div>
-        </div>
-        <div ng-class="['col-md-6']">
             <div id="graph"></div>
             <div ng-class="['sigma-tools']">
                 <div ng-class="['btn-group-vertical']">
@@ -61,6 +52,17 @@
             </div>
             <div ng-class="['row', 'legend']">
                 <legend columns-number="2" />
+            </div>
+        </div>
+        <div ng-class="['col-md-6']">
+            <div ng-switch on="view">
+                <div ng-switch-when="grid">
+                    <div ng-include="'partials/entities-grid.html'"></div>
+                </div>
+                <div ng-switch-when="list">
+                    <div ng-include="'partials/entities-list.html'"></div>
+                </div>
+                <div ng-switch-default></div>
             </div>
         </div>
     </div>

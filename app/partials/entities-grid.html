@@ -2,9 +2,11 @@
     <md-grid-list md-cols-sm="1" md-cols-md="3" md-cols-gt-md="3" md-row-height-gt-md="4:3" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="10px">
         <md-grid-tile id="{{result.ID}}" ng-repeat="result in displayedResults" md-rowspan="1" md-colspan="1" md-colspan-sm="1" ng-class="['gray']">
             <a href="#/WebEntity/{{result.ID}}">
-                <img ng-class="['fit', 'grayscale']" src="https://api.pagelr.com/capture?uri={{result.URL}}&width=400&height=300"></img>
+                <!-- <img ng-class="['fit', 'grayscale']" src="https://api.pagelr.com/capture?uri={{result.URL}}&width=400&height=300"></img> -->
+                <img ng-class="['fit', 'grayscale']" src="http://www.robothumb.com/src/?url={{result.URL}}&size=320x240"></img>
                 <md-grid-tile-footer ng-class="['tile-footer']">
-                    <h3>{{result.FULL_NAME}}</h3> {{result.ACTORS_TYPE | translate:'actorsType'}}
+                    <h3>{{result.FULL_NAME}}</h3>
+                    <p ng-class="['actors-type']">{{result.ACTORS_TYPE | translate:'actorsType'}}</p>
                 </md-grid-tile-footer>
             </a>
         </md-grid-tile>
